@@ -49,9 +49,10 @@ Texture plainTexture;
 Texture pisoTexture;
 Texture AgaveTexture;
 
-Model Kitt_M;
-Model Llanta_M;
-Model Blackhawk_M;
+Model Banca_M;
+Model Kiosko_M;
+Model Bote_Basura_M;
+Model Fuente_M;
 
 
 Skybox skybox;
@@ -250,6 +251,15 @@ int main()
 
 	//Modelos
 
+	Banca_M = Model();
+	Banca_M.LoadModel("Models/banca.obj");
+	Kiosko_M = Model();
+	Kiosko_M.LoadModel("Models/kiosko.obj");
+	Bote_Basura_M = Model();
+	Bote_Basura_M.LoadModel("Models/botebasura.obj");
+	Fuente_M = Model();
+	Fuente_M.LoadModel("Models/fuente.obj");
+
 	// Skybox
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_rt.tga");
@@ -357,15 +367,44 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		pisoTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//meshList[2]->RenderMesh();
 
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(200.0f, 1.0f, 200.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		meshList[4]->RenderMesh();
+
+		//Instancia de la banca 
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::translate(model, glm::vec3(1.0f, -1.6f, 4.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Instancia Kiosko
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -4.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Kiosko_M.RenderModel();
+
+		//Instancia Bote de Basura
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-5.0f, -0.7f, -4.0f));
+		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		//Instancia fuente
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-5.0f, -0.3f, -18.0f));
+		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Fuente_M.RenderModel();
+
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
@@ -377,7 +416,7 @@ int main()
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		AgaveTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[3]->RenderMesh();
+		//meshList[3]->RenderMesh();
 		glDisable(GL_BLEND);
 
 		glUseProgram(0);
