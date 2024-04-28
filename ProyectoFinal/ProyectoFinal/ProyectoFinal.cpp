@@ -48,6 +48,7 @@ Texture dirtTexture;
 Texture plainTexture;
 Texture pisoTexture;
 Texture AgaveTexture;
+Texture CespesTexture;
 
 Model Banca_M;
 Model Kiosko_M;
@@ -199,15 +200,15 @@ void CrearPlano()
 	GLfloat plano_vertices[] = {
 		// Vértices: (x, y, z, s(x), t(y), nx, ny, nz)
 		-0.234f,0.0f,	0.27f,      0.0f,   0.0f,   0.0f,-1.0f,0.0f, // C 0
-		1.8f,	0.0f,	0.27f,      0.0f,   0.0f,   0.0f,-1.0f,0.0f, // D 1
-		1.8f,	0.0f,	-1.642f,    0.0f,   0.0f,   0.0f,-1.0f,0.0f, // E 2
-		5.42f,	0.0f,	-1.64f,     0.0f,   0.0f,   0.0f,-1.0f,0.0f, // F 3
-		5.42f,	0.0f,	-2.1f,      0.0f,   0.0f,   0.0f,-1.0f,0.0f, // G 4
-		6.95f,	0.0f,	-3.3f,      0.0f,   0.0f,   0.0f,-1.0f,0.0f, // H 5
-		7.33f,	0.0f,	-3.3f,      0.0f,   0.0f,   0.0f,-1.0f,0.0f, // I 6
-		7.33f,	0.0f,	-3.94f,     0.0f,   0.0f,   0.0f,-1.0f,0.0f, // J 7
-		4.568f,	0.0f,	-3.94f,     0.0f,   0.0f,   0.0f,-1.0f,0.0f, // K 8
-		-1.27f,	0.0f,	-3.94f,     0.0f,   0.0f,   0.0f,-1.0f,0.0f, // L 9
+		1.8f,	0.0f,	0.27f,      10.0f,   0.0f,   0.0f,-1.0f,0.0f, // D 1
+		1.8f,	0.0f,	-1.642f,    10.0f,   10.0f,   0.0f,-1.0f,0.0f, // E 2
+		5.42f,	0.0f,	-1.64f,     30.0f,   10.0f,   0.0f,-1.0f,0.0f, // F 3
+		5.42f,	0.0f,	-2.1f,      30.0f,   13.0f,   0.0f,-1.0f,0.0f, // G 4
+		6.95f,	0.0f,	-3.3f,      37.0f,   20.0f,   0.0f,-1.0f,0.0f, // H 5
+		7.33f,	0.0f,	-3.3f,      40.0f,   20.0f,   0.0f,-1.0f,0.0f, // I 6
+		7.33f,	0.0f,	-3.94f,     40.0f,   23.0f,   0.0f,-1.0f,0.0f, // J 7
+		4.568f,	0.0f,	-3.94f,     22.0f,   23.0f,   0.0f,-1.0f,0.0f, // K 8
+		-1.27f,	0.0f,	-3.94f,     -5.0f,	23.0f,   0.0f,-1.0f,0.0f, // L 9
 	};
 
 	Mesh* planoParque = new Mesh();
@@ -246,6 +247,8 @@ int main()
 	pisoTexture.LoadTextureA();
 	AgaveTexture = Texture("Textures/Agave.tga");
 	AgaveTexture.LoadTextureA();
+	CespesTexture = Texture("Textures/cesped.tga");
+	CespesTexture.LoadTextureA();
 	
 	// Texturas
 
@@ -375,6 +378,7 @@ int main()
 		model = glm::scale(model, glm::vec3(200.0f, 1.0f, 200.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CespesTexture.UseTexture();
 		meshList[4]->RenderMesh();
 
 		//Instancia de la banca 
