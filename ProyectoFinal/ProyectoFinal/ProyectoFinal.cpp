@@ -54,7 +54,9 @@ Model Banca_M;
 Model Kiosko_M;
 Model Bote_Basura_M;
 Model Fuente_M;
-
+Model Mesa;
+Model Bebedero;
+Model TorreTLOZ;
 
 Skybox skybox;
 
@@ -262,6 +264,12 @@ int main()
 	Bote_Basura_M.LoadModel("Models/botebasura.obj");
 	Fuente_M = Model();
 	Fuente_M.LoadModel("Models/fuente.obj");
+	Mesa = Model();
+	Mesa.LoadModel("Models/Mesa.obj");
+	Bebedero = Model();
+	Bebedero.LoadModel("Models/Bebedero.obj");
+	TorreTLOZ = Model();
+	TorreTLOZ.LoadModel("Models/TorreDeMapeo/TorreDeMapeo.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -408,7 +416,27 @@ int main()
 		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Fuente_M.RenderModel();
+		
+		//Instancia mesa
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f, -0.3f, 8.0f));
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa.RenderModel();
 
+		//Instancia Bebedero
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-15.0f, -0.3f, 8.0f));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bebedero.RenderModel();
+
+		//Instancia torre
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-25.0f, -0.3f, 20.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		TorreTLOZ.RenderModel();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
