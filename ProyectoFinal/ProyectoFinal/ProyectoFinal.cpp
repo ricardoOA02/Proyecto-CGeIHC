@@ -271,7 +271,7 @@ int main()
 	Bebedero = Model();
 	Bebedero.LoadModel("Models/Bebedero.obj");
 	TorreTLOZ = Model();
-	TorreTLOZ.LoadModel("Models/TorreDeMapeo/TorreDeMapeo.obj");
+	TorreTLOZ.LoadModel("Models/TLOZ/TorreDeMapeo.obj");
 	ArbolMuerto_M = Model();
 	ArbolMuerto_M.LoadModel("Models/arbolmuerto.obj");
 	CarroCoraje_M = Model();
@@ -425,7 +425,7 @@ int main()
 		
 		//Instancia mesa
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-10.0f, -0.3f, 8.0f));
+		model = glm::translate(model, glm::vec3(-10.0f, -0.3f, -8.0f));
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Mesa.RenderModel();
