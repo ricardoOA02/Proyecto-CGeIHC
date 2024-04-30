@@ -58,6 +58,7 @@ Model Mesa;
 Model Bebedero;
 Model TorreTLOZ;
 Model ArbolMuerto_M;
+Model CarroCoraje_M;
 
 Skybox skybox;
 
@@ -273,6 +274,8 @@ int main()
 	TorreTLOZ.LoadModel("Models/TorreDeMapeo/TorreDeMapeo.obj");
 	ArbolMuerto_M = Model();
 	ArbolMuerto_M.LoadModel("Models/arbolmuerto.obj");
+	CarroCoraje_M = Model();
+	CarroCoraje_M.LoadModel("Models/Corage/carro.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -447,6 +450,11 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		ArbolMuerto_M.RenderModel();
 
+		//Instancia Carro de Coraje
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -20.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		CarroCoraje_M.RenderModel();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
