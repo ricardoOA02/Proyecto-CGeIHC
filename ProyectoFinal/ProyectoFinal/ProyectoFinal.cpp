@@ -240,7 +240,7 @@ int main()
 	CrearPlano();
 	CreateShaders();
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.3f, 0.5f);
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
 	camera2 = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.3f, 0.5f);
 	
 	//brickTexture = Texture("Textures/brick.png");
@@ -368,6 +368,7 @@ int main()
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+		//
 
 		// Luz ligada a la cámara de tipo flash
 		// sirve para que en tiempo de ejecución (dentro del while) se cambien propiedades de la luz
@@ -464,14 +465,15 @@ int main()
 
 		//Instancia Corage
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(15.0f, -1.0f, -20.0f));
+		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x, -1.0f, camera.getCameraPosition().z - 8.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Coraje_M.RenderModel();
 		
 		//Instancia Casa de Coraje
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(30.0f, -1.0f, -60.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		model = glm::scale(model, glm::vec3(8.0f, 8.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CasaCoraje_M.RenderModel();
 

@@ -18,6 +18,9 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	{
 		keys[i] = 0;
 	}
+	personajePosX = 0.0f;
+	personajePosZ = 0.0f;
+
 }
 int Window::Initialise()
 {
@@ -112,6 +115,23 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow-> muevex -= 1.0;
 	}
+	if (key == GLFW_KEY_W)
+	{
+		theWindow->personajePosZ += 1.0f;
+	}
+	if (key == GLFW_KEY_S)
+	{
+		theWindow->personajePosZ -= 1.0f;
+	}
+	if (key == GLFW_KEY_A)
+	{
+		theWindow->personajePosX += 1.0f;
+	}
+	if (key == GLFW_KEY_D)
+	{
+		theWindow->personajePosX -= 1.0f;
+	}
+
 
 
 
