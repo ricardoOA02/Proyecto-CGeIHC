@@ -28,6 +28,7 @@ private:
 	glm::vec3 up;
 	glm::vec3 right;
 	glm::vec3 worldUp;
+	glm::vec3 front2;
 
 	GLfloat yaw;
 	GLfloat pitch;

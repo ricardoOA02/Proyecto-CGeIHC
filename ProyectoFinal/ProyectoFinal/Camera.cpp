@@ -22,12 +22,12 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 
 	if (keys[GLFW_KEY_W])
 	{
-		position += front * velocity;
+		position -= front2 * velocity;
 	}
 
 	if (keys[GLFW_KEY_S])
 	{
-		position -= front * velocity;
+		position += front2 * velocity;
 	}
 
 	if (keys[GLFW_KEY_A])
@@ -89,6 +89,7 @@ void Camera::update()
 
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));
+	front2 = glm::normalize(glm::cross(right, worldUp));
 }
 
 
