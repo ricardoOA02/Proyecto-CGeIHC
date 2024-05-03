@@ -63,6 +63,7 @@ Model Coraje_M;
 Model CasaCoraje_M;
 Model Lampara_M;
 Model Pino_M;
+Model Igloo_M;
 
 Skybox skybox;
 
@@ -288,6 +289,8 @@ int main()
 	Lampara_M.LoadModel("Models/lampara.obj");
 	Pino_M = Model();
 	Pino_M.LoadModel("Models/pino.obj");
+	Igloo_M = Model();
+	Igloo_M.LoadModel("Models/igloo.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -471,7 +474,7 @@ int main()
 
 		//Instancia Corage
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x, camera.getCameraPosition().y - 7.0f, camera.getCameraPosition().z - 8.0f));
+		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x, camera.getCameraPosition().y - 11.0f, camera.getCameraPosition().z - 8.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Coraje_M.RenderModel();
@@ -496,6 +499,13 @@ int main()
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pino_M.RenderModel();
+
+		//Instancia Igloo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(80.0f, -1.0f, -60.0f));
+		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Igloo_M.RenderModel();
 
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
