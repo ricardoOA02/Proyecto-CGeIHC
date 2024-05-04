@@ -77,6 +77,7 @@ Model Isla;
 Model CabezaGuardian;
 Model CuerpoGuardian;
 Model HeliceGuardian;
+Model Korok;
 
 Skybox skybox;
 
@@ -377,7 +378,8 @@ int main()
 	HeliceGuardian.LoadModel("Models/TLOZ/Guardian/HeliceGuardian.obj");
 	Isla = Model();
 	Isla.LoadModel("Models/TLOZ/Isla.obj");
-
+	Korok = Model();
+	Korok.LoadModel("Models/TLOZ/Korok.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -632,7 +634,7 @@ int main()
 		model = glm::translate(model, glm::vec3(10.0f, 40.0f, 10.0f));
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Isla.RenderModel();
+		Korok.RenderModel();
 
 		//Instancia toroide
 		//model = glm::mat4(1.0);
