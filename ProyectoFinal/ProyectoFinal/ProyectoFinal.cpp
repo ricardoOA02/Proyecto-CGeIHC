@@ -73,7 +73,7 @@ Model CasaCoraje_M;
 Model Lampara_M;
 Model Pino_M;
 Model Igloo_M;
-
+Model Isla;
 Model CabezaGuardian;
 Model CuerpoGuardian;
 Model HeliceGuardian;
@@ -375,6 +375,9 @@ int main()
 	CuerpoGuardian.LoadModel("Models/TLOZ/Guardian/CuerpoGuardian.obj");
 	HeliceGuardian = Model();
 	HeliceGuardian.LoadModel("Models/TLOZ/Guardian/HeliceGuardian.obj");
+	Isla = Model();
+	Isla.LoadModel("Models/TLOZ/Isla.obj");
+
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -624,21 +627,21 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Igloo_M.RenderModel();
 
-		//Instancia guardian
+		//Instancia isla
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 20.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 40.0f, 10.0f));
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		HeliceGuardian.RenderModel();
+		Isla.RenderModel();
 
 		//Instancia toroide
-		model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		color = glm::vec3(1.0f, 0.0f, 0.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		meshList[5]->RenderMesh();
+		//model = glm::mat4(1.0);
+		////model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		////model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//meshList[5]->RenderMesh();
 
 		
 
