@@ -34,7 +34,10 @@ Proyecto Final
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "Material.h"
+
+const float PI = 3.14159265f;
 const float toRadians = 3.14159265f / 180.0f;
+using std::vector;
 
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -225,6 +228,65 @@ void CrearPlano()
 	meshList.push_back(planoParque);
 }
 
+void CrearToroide(GLfloat radioToro, GLfloat radioTubo, int vertRes, int horRes) {
+	int i, j, k;
+
+	GLfloat dtVer = 2 * PI / vertRes, dtHor = 2 * PI / horRes, x, z, y, theta, phi; // Se calculan el tamaño del angulo para la resolucion vertical y horizontal
+
+	vector<GLfloat> vertices;
+	vector<unsigned int> indices;
+
+	for (j = 0; j <= vertRes; j++)
+	{
+		theta = dtVer * j;
+		for (k = 0; k <= horRes; k++)
+		{
+			phi = dtHor * k;
+			x = (radioToro + radioTubo * cos(phi)) * cos(theta); // Calculo de las coordenadas de los puntos en base a la ecuacion del toroide
+			z = (radioToro + radioTubo * cos(phi)) * sin(theta); // tomando en cuenta resolucion vertical y horizontal
+			y = radioTubo * sin(phi);
+			for (i = 0; i < 3; i++)
+			{
+				switch (i) { // Se agregan los vertices al vector
+				case 0:
+					vertices.push_back(x);
+					break;
+				case 1:
+					vertices.push_back(y);
+					break;
+				case 2:
+					vertices.push_back(z);
+					break;
+				}
+			}
+		}
+	}
+
+	int control = 0, index1 = 0; // Variables de control para crear los indices
+	int index2 = index1 + horRes;
+
+	while (control < (vertRes * horRes * 6) + vertRes * 6)
+	{
+		indices.push_back(index1); // Se agregan los indices para formar triangulos
+		indices.push_back(index2);
+		if (control % 2 == 0)
+		{
+			index1++;
+			indices.push_back(index1);
+		}
+		else
+		{
+			index2++;
+			indices.push_back(index2);
+		}
+		control++;
+	}
+
+	Mesh* toro = new Mesh(); // Se creal el mesh para renderizar la figura
+	toro->CreateMeshGeometry(vertices, indices, vertices.size(), (vertRes * horRes * 6) + vertRes * 6);
+	meshList.push_back(toro);
+}
+
 void CreateShaders()
 {
 	Shader *shader1 = new Shader();
@@ -242,7 +304,7 @@ int main()
 	CreateObjects();
 	CrearPlano();
 	CreateShaders();
-
+	CrearToroide(10.0f, 3.0f, 20, 20);
 	camera = Camera(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
 	camera2 = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.3f, 0.5f);
 	
@@ -507,6 +569,13 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Igloo_M.RenderModel();
 
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		meshList[5]->RenderMesh();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
