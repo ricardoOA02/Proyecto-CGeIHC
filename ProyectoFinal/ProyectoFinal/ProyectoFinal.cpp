@@ -16,6 +16,10 @@ Proyecto Final
 #include <glm.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtc\type_ptr.hpp>
+
+//Biblioteca de audio
+#include <irrklang/irrKlang.h>
+
 //para probar el importer
 //#include<assimp/Importer.hpp>
 
@@ -34,6 +38,8 @@ Proyecto Final
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "Material.h"
+
+using namespace irrklang;
 
 const float PI = 3.14159265f;
 const float toRadians = 3.14159265f / 180.0f;
@@ -305,6 +311,13 @@ int main()
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
 	mainWindow.Initialise();
 
+	//Inicialización del sonido
+	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+
+	if (!engine)
+		printf("No se puede inicializar el audio\n");
+	engine->play2D("audios/parque.mp3", true);
+
 	CreateObjects();
 	CrearPlano();
 	CreateShaders();
@@ -418,6 +431,9 @@ int main()
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
+	//Ejecución del sonido de fondo
+	engine->play2D("audios/parque.mp3", true);
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
