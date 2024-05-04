@@ -316,7 +316,6 @@ int main()
 
 	if (!engine)
 		printf("No se puede inicializar el audio\n");
-	engine->play2D("audios/parque.mp3", true);
 
 	CreateObjects();
 	CrearPlano();
@@ -432,7 +431,24 @@ int main()
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
 	//Ejecución del sonido de fondo
-	engine->play2D("audios/parque.mp3", true);
+	//engine->play2D("audios/parque.mp3", true);
+	irrklang::ISound* AudioFondo = engine->play2D("audios/parque.mp3", true, false, true);
+	AudioFondo->setVolume(0.1f);
+
+	//Inicia el audio 3D
+	irrklang::vec3df posicionOyente(0, 0, 0);
+	irrklang::vec3df direccionOyente(0, -1, 0);
+	irrklang::vec3df velPerSecond(0, 0, 0);
+	irrklang::vec3df upVector(0, 1, 0);
+
+	//Sonidos de objetos
+
+	//Audio del carro
+	irrklang::vec3df posicion(20.0f, -1.0f, -20.0f);
+	irrklang::ISound* AudioCarro = engine->play3D("audios/carro.flac", posicion, true, true);
+
+	AudioCarro->setMinDistance(15.0f);
+	AudioCarro->setIsPaused(false);
 
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -499,6 +515,17 @@ int main()
 		CespesTexture.UseTexture();
 		meshList[4]->RenderMesh();
 
+
+		//Actualizar la posicion del audio
+		posicionOyente.X = camera.getCameraPosition().x;
+		posicionOyente.Y = camera.getCameraPosition().y;
+		posicionOyente.Z = camera.getCameraPosition().z;
+		direccionOyente.X = -camera.getCameraDirection().x;
+		direccionOyente.Y = -camera.getCameraDirection().y;
+		direccionOyente.Z = -camera.getCameraDirection().z;
+
+		engine->setListenerPosition(posicionOyente, direccionOyente, velPerSecond, upVector);
+
 		//Instancia de la banca 
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -559,6 +586,8 @@ int main()
 		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -20.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CarroCoraje_M.RenderModel();
+		//Sonido del carro
+
 
 		//Instancia Corage
 		model = glm::mat4(1.0);
@@ -630,6 +659,6 @@ int main()
 
 		mainWindow.swapBuffers();
 	}
-
+	AudioCarro->drop();
 	return 0;
 }
