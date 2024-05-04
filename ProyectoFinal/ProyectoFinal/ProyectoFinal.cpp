@@ -68,6 +68,10 @@ Model Lampara_M;
 Model Pino_M;
 Model Igloo_M;
 
+Model CabezaGuardian;
+Model CuerpoGuardian;
+Model HeliceGuardian;
+
 Skybox skybox;
 
 //materiales
@@ -353,6 +357,12 @@ int main()
 	Pino_M.LoadModel("Models/pino.obj");
 	Igloo_M = Model();
 	Igloo_M.LoadModel("Models/igloo.obj");
+	CabezaGuardian = Model();
+	CabezaGuardian.LoadModel("Models/TLOZ/Guardian/CabezaGuardian.obj");
+	CuerpoGuardian = Model();
+	CuerpoGuardian.LoadModel("Models/TLOZ/Guardian/CuerpoGuardian.obj");
+	HeliceGuardian = Model();
+	HeliceGuardian.LoadModel("Models/TLOZ/Guardian/HeliceGuardian.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
