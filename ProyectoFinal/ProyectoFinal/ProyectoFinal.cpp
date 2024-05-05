@@ -89,6 +89,7 @@ Model Korok;
 //Faun
 Model Caballo;
 Model Zorro;
+Model Pinguino_M;
 
 Skybox skybox;
 
@@ -395,6 +396,8 @@ int main()
 	Caballo.LoadModel("Models/Caballo.obj");
 	Zorro = Model();
 	Zorro.LoadModel("Models/Zorro.obj");
+	Pinguino_M = Model();
+	Pinguino_M.LoadModel("Models/horadeaven/gunter.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -664,6 +667,13 @@ int main()
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Zorro.RenderModel();
+
+		//Instancia pinguino
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(25.0f, -1.0f, 50.0f));
+		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pinguino_M.RenderModel();
 
 		//Instancia toroide
 		//model = glm::mat4(1.0);
