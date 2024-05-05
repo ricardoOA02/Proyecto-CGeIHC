@@ -59,26 +59,36 @@ Texture pisoTexture;
 Texture AgaveTexture;
 Texture CespesTexture;
 
+//Estructuras
+Model TorreTLOZ;
+Model CasaCoraje_M;
+Model Igloo_M;
+Model Isla;
+
+//Vehiculos
+Model CarroCoraje_M;
+Model HeliceGuardian;
+Model CabezaGuardian;
+Model CuerpoGuardian;
+
+//Objetos
 Model Banca_M;
 Model Kiosko_M;
 Model Bote_Basura_M;
 Model Fuente_M;
 Model Mesa;
 Model Bebedero;
-Model TorreTLOZ;
-Model ArbolMuerto_M;
-Model CarroCoraje_M;
 Model Coraje_M;
-Model CasaCoraje_M;
 Model Lampara_M;
+
+//Flora
+Model ArbolMuerto_M;
 Model Pino_M;
-Model Igloo_M;
-Model Isla;
-Model CabezaGuardian;
-Model CuerpoGuardian;
-Model HeliceGuardian;
 Model Korok;
+
+//Faun
 Model Caballo;
+Model Zorro;
 
 Skybox skybox;
 
@@ -383,6 +393,8 @@ int main()
 	Korok.LoadModel("Models/TLOZ/Korok.obj");
 	Caballo = Model();
 	Caballo.LoadModel("Models/Caballo.obj");
+	Zorro = Model();
+	Zorro.LoadModel("Models/Zorro.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -645,6 +657,13 @@ int main()
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Caballo.RenderModel();
+
+		//Instancia zorro
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(15.0f, 5.0f, 50.0f));
+		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Zorro.RenderModel();
 
 		//Instancia toroide
 		//model = glm::mat4(1.0);
