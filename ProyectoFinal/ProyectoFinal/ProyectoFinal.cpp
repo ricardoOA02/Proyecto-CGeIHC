@@ -78,6 +78,7 @@ Model CabezaGuardian;
 Model CuerpoGuardian;
 Model HeliceGuardian;
 Model Korok;
+Model Caballo;
 
 Skybox skybox;
 
@@ -380,6 +381,8 @@ int main()
 	Isla.LoadModel("Models/TLOZ/Isla.obj");
 	Korok = Model();
 	Korok.LoadModel("Models/TLOZ/Korok.obj");
+	Caballo = Model();
+	Caballo.LoadModel("Models/Caballo.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -629,12 +632,19 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Igloo_M.RenderModel();
 
-		//Instancia isla
+		//Instancia korok
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 40.0f, 10.0f));
-		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 4.0f, 10.0f));
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Korok.RenderModel();
+
+		//Instancia caballo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 50.0f));
+		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Caballo.RenderModel();
 
 		//Instancia toroide
 		//model = glm::mat4(1.0);
