@@ -80,17 +80,20 @@ Model Mesa;
 Model Bebedero;
 Model Coraje_M;
 Model Lampara_M;
-Model EspadaMaestra;
 
 //Flora
 Model ArbolMuerto_M;
 Model Pino_M;
 Model Korok;
 
-//Faun
+//Fauna
 Model Caballo;
 Model Zorro;
 Model Pinguino_M;
+
+//Otros
+Model EspadaMaestra;
+Model Slime;
 
 Skybox skybox;
 
@@ -401,6 +404,8 @@ int main()
 	Pinguino_M.LoadModel("Models/horadeaven/gunter.obj");
 	EspadaMaestra = Model();
 	EspadaMaestra.LoadModel("Models/TLOZ/EspadaMaestra.obj");
+	Slime = Model();
+	Slime.LoadModel("Models/TLOZ/Slime.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -694,7 +699,18 @@ int main()
 		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		//meshList[5]->RenderMesh();
 
-		
+		//Instancia Slime
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//blending: transparencia o traslucidez
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		AgaveTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Slime.RenderModel();
+		glDisable(GL_BLEND);
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
