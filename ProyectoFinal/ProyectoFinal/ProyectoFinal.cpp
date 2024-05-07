@@ -429,8 +429,8 @@ int main()
 
 	//luz direccional, sólo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-		0.3f, 0.3f,
-		0.0f, 0.0f, -1.0f);
+		0.9f, 0.03f,
+		0.0f, -1.0f, 0.0f);
 
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
@@ -486,6 +486,13 @@ int main()
 	AudioCarro->setMinDistance(15.0f);
 	AudioCarro->setIsPaused(false);
 
+	// Variables para el ciclo dia/noche
+	float interpolation = 0.00005;
+	bool colorchange = true;
+	GLfloat red = 1.0f, green = 1.0f, blue = 1.0f;
+	GLfloat nightRed = 0.07421875f, nightGreen = 0.09375f, nightBlue = 0.3828125f;
+	GLfloat dayRed = 1.0f, dayGreen = 1.0f, dayBlue = 1.0f;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -494,6 +501,32 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		// Ciclo dia/noche
+		// Comprueba si se llego al limite de dia o noche
+		if (interpolation > 1)
+		{
+			colorchange = false;
+		}
+		else if (interpolation < 0)
+		{
+			colorchange = true;
+		}
+		// Aumenta o disminuye la variable de interpolacion para el color
+		if (colorchange)
+		{
+			interpolation += 0.00005;
+		}
+		else
+		{
+			interpolation -= 0.00005;
+		}
+		// Hace el calculo de los valores del color
+		red = dayRed + (nightRed - dayRed) * interpolation;
+		green = dayGreen + (nightGreen - dayGreen) * interpolation;
+		blue = dayBlue + (nightBlue - dayBlue) * interpolation;
+		// Establece el color de la luz
+		mainLight.SetColor(glm::vec3(red, green, blue));
+		
 		//Recibir eventos del usuario
 		glfwPollEvents();
 		camera.keyControl(mainWindow.getsKeys(), deltaTime);

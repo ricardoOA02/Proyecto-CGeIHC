@@ -22,6 +22,10 @@ void DirectionalLight::UseLight(GLfloat ambientIntensityLocation, GLfloat ambien
 	glUniform1f(diffuseIntensityLocation, diffuseIntensity);
 }
 
+void DirectionalLight::SetColor(glm::vec3 col) {
+	color = col;
+}
+
 DirectionalLight::~DirectionalLight()
 {
 }
