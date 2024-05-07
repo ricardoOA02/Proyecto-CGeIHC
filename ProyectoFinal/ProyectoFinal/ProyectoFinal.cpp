@@ -60,6 +60,7 @@ Texture AgaveTexture;
 Texture CespesTexture;
 
 //Estructuras
+Model Piso_M;
 Model TorreTLOZ;
 Model CasaCoraje_M;
 Model Igloo_M;
@@ -358,7 +359,8 @@ int main()
 	// Texturas
 
 	//Modelos
-
+	Piso_M = Model();
+	Piso_M.LoadModel("Models/piso.obj");
 	Banca_M = Model();
 	Banca_M.LoadModel("Models/banca.obj");
 	Kiosko_M = Model();
@@ -536,19 +538,19 @@ int main()
 		model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		pisoTexture.UseTexture();
+		//pisoTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		//meshList[2]->RenderMesh();
 
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(200.0f, 1.0f, 200.0f));
+		model = glm::scale(model, glm::vec3(500.0f, 1.0f, 400.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		CespesTexture.UseTexture();
-		meshList[4]->RenderMesh();
-
+		//CespesTexture.UseTexture();
+		//meshList[4]->RenderMesh();
+		Piso_M.RenderModel();
 
 		//Actualizar la posicion del audio
 		posicionOyente.X = camera.getCameraPosition().x;
