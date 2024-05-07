@@ -64,6 +64,7 @@ Model TorreTLOZ;
 Model CasaCoraje_M;
 Model Igloo_M;
 Model Isla;
+Model CasaLink;
 
 //Vehiculos
 Model CarroCoraje_M;
@@ -406,6 +407,8 @@ int main()
 	EspadaMaestra.LoadModel("Models/TLOZ/EspadaMaestra.obj");
 	Slime = Model();
 	Slime.LoadModel("Models/TLOZ/Slime.obj");
+	CasaLink = Model();
+	CasaLink.LoadModel("Models/TLOZ/CasaVentanas.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -699,6 +702,19 @@ int main()
 		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		//meshList[5]->RenderMesh();
 
+		//Instancia Casa
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(100.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//blending: transparencia o traslucidez
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		AgaveTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		CasaLink.RenderModel();
+		glDisable(GL_BLEND);
+
 		//Instancia Slime
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -708,7 +724,7 @@ int main()
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		AgaveTexture.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Slime.RenderModel();
 		glDisable(GL_BLEND);
 

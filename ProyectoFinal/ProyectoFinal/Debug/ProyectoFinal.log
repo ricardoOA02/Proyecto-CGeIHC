@@ -5,6 +5,7 @@ C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\W
 C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(13,37): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
   (compiling source file 'ProyectoFinal.cpp')
   
-C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(487,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(489,33): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(490,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(492,33): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   ProyectoFinal.vcxproj -> C:\Users\ricar\OneDrive\Escritorio\Proyecto-CGeIHC\ProyectoFinal\Debug\ProyectoFinal.exe
