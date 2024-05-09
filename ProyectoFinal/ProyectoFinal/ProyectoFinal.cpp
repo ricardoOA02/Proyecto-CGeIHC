@@ -117,11 +117,25 @@ float rotCoche;
 float rotCocheOffset;
 bool carroAvanza;
 
-float movCardo;
-float movCardoOffset;
-float rotCardo;
-float rotCardoOffset;
+float movXCardo;
+float movXCardoOffset;
+float movZCardo;
+float movZCardoOffset;
+float rotXCardo;
+float rotXCardoOffset;
+float rotZCardo;
+float rotZCardoOffset;
 bool cardoAvanza;
+bool cardoRetrocede;
+bool cardoDerecha;
+bool cardoIzquierda;
+
+float movPinguino;
+float movPinguinoOffset;
+float rotPinguino;
+float rotPinguinoOffset;
+bool pinguinoAvanza;
+bool inclinacion;
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
@@ -523,11 +537,20 @@ int main()
 	movCarroOffset = 0.5f;
 
 	cardoAvanza = true;
-	movCardo = 0.0f;
-	movCardoOffset = 0.3f;
-	rotCardo = 0.0f;
-	rotCardoOffset = 4.0f;
+	cardoRetrocede = cardoIzquierda = cardoDerecha = false;
+	movXCardo = movZCardo = 0.0f;
+	movXCardoOffset = movZCardoOffset = 0.3f;
+	rotXCardo = 0.0f;
+	rotXCardoOffset = 4.0f;
+	rotZCardo = 0.0f;
+	rotZCardoOffset = 4.0f;
 
+	pinguinoAvanza = true;
+	inclinacion = true;
+	movPinguino = 0.0f;
+	movPinguinoOffset = 0.1f;
+	rotPinguino = -15.0f;
+	rotPinguinoOffset = 3.0f;
 
 
 	////Loop mientras no se cierra la ventana
@@ -564,29 +587,97 @@ int main()
 		if (rotLlantas > 360.0f || rotLlantas < -360.0f)
 			rotLlantas = 0.0f;
 
-		//Animacion cardo
+		//Animacion básica del cardo
 		if (cardoAvanza)
 		{
-			if (movCardo > -100.0f)
+			if (movZCardo > -100.0f)
 			{
-				movCardo -= movCardoOffset * deltaTime;
-				rotCardo += rotCardoOffset * deltaTime;
+				movZCardo -= movZCardoOffset * deltaTime;
+				rotXCardo -= rotXCardoOffset * deltaTime;
+				rotZCardo = 0.0f;
 			}
 			else
+			{
 				cardoAvanza = false;
+				cardoIzquierda = true;
+			}
+		}
+		if (cardoRetrocede)
+		{
+			if (movZCardo < 100.0f)
+			{
+				movZCardo += movZCardoOffset * deltaTime;
+				rotXCardo += rotXCardoOffset * deltaTime;
+				rotZCardo = 0.0f;
+			}
+			else
+			{
+				cardoRetrocede = false;
+				cardoDerecha = true;
+			}
+		}
+		if (cardoIzquierda)
+		{
+			if (movXCardo > -100.0f)
+			{
+				movXCardo -= movXCardoOffset * deltaTime;
+				rotZCardo += rotZCardoOffset * deltaTime;
+				rotXCardo = 0.0f;
+			}
+			else
+			{
+				cardoRetrocede = true;
+				cardoIzquierda = false;
+			}
+		}
+		if (cardoDerecha)
+		{
+			if (movXCardo < 100.0f)
+			{
+				movXCardo += movXCardoOffset * deltaTime;
+				rotZCardo -= rotZCardoOffset * deltaTime;
+				rotXCardo = 0.0f;
+			}
+			else
+			{
+				cardoAvanza = true;
+				cardoDerecha = false;
+			}
+		}
+		if (rotXCardo > 360.0f || rotXCardo < -360.0f)
+			rotXCardo = 0.0f;
+		if (rotZCardo > 360.0f || rotZCardo < -360.0f)
+			rotZCardo = 0.0f;
+
+		//Animación básica del Pinguino
+		if (pinguinoAvanza)
+		{
+			if (movPinguino > -80.0f)
+				movPinguino -= movPinguinoOffset * deltaTime;
+			else
+				pinguinoAvanza = false;
 		}
 		else
 		{
-			if (movCardo < 100.0f)
-			{
-				movCardo += movCardoOffset * deltaTime;
-				rotCardo -= rotCardoOffset * deltaTime;
-			}
+			if (movPinguino < 80.0f)
+				movPinguino += movPinguinoOffset * deltaTime;
 			else
-				cardoAvanza = true;
+				pinguinoAvanza = true;
 		}
-		if (rotCardo > 360.0f || rotCardo < -360.0f)
-			rotCardo = 0.0f;
+		if (inclinacion)
+		{
+			if (rotPinguino > -15.0f)
+				rotPinguino -= rotPinguinoOffset * deltaTime;
+			else
+				inclinacion = false;
+		}
+		else
+		{
+			if (rotPinguino < 15.0f)
+				rotPinguino += rotPinguinoOffset * deltaTime;
+			else
+				inclinacion = true;
+		}
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -763,8 +854,8 @@ int main()
 
 		//Instancia Corage
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x, camera.getCameraPosition().y - 11.0f, camera.getCameraPosition().z - 8.0f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0, 0.0f));
+		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x + glm::cos(glm::radians(camera.getYaw())) * 8.0, camera.getCameraPosition().y - 11.0f, camera.getCameraPosition().z + glm::sin(glm::radians(camera.getYaw())) * 8.0));
+		model = glm::rotate(model, glm::radians(90.0f - camera.getYaw()), glm::vec3(0.0f, 1.0, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Coraje_M.RenderModel();
 		
@@ -819,8 +910,9 @@ int main()
 
 		//Instancia pinguino
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(25.0f, -1.0f, 50.0f));
+		model = glm::translate(model, glm::vec3(25.0f + movPinguino, -1.0f, 50.0f));
 		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		model = glm::rotate(model, glm::radians(-rotPinguino), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pinguino_M.RenderModel();
 
@@ -869,8 +961,9 @@ int main()
 
 		//Instancia Cardo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-15.0f + movCardo, 0.0f, 5.0f));
-		model = glm::rotate(model, glm::radians(rotCardo), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(-15.0f + movXCardo, 0.0f, 5.0f + movZCardo));
+		model = glm::rotate(model, glm::radians(rotXCardo), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotZCardo), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Cardo_M.RenderModel();
 
