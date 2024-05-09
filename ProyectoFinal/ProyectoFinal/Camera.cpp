@@ -2,17 +2,19 @@
 
 Camera::Camera() {}
 
-Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed)
+Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed, GLboolean aerea)
 {
 	position = startPosition;
 	worldUp = startUp;
 	yaw = startYaw;
 	pitch = startPitch;
 	front = glm::vec3(0.0f, 0.0f, -1.0f);
+	front2 = glm::vec3(0.0f, 0.0f, -1.0f);
 
 	moveSpeed = startMoveSpeed;
 	turnSpeed = startTurnSpeed;
 
+	camaraAerea = aerea;
 	update();
 }
 
@@ -22,12 +24,22 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 
 	if (keys[GLFW_KEY_W])
 	{
-		position -= front2 * velocity;
+		if (!camaraAerea)
+			position += front * velocity;
+		else
+		{
+			position += front2 * velocity;
+		}
 	}
 
 	if (keys[GLFW_KEY_S])
 	{
-		position += front2 * velocity;
+		if (!camaraAerea)
+			position -= front * velocity;
+		else
+		{
+			position -= front2 * velocity;
+		}
 	}
 
 	if (keys[GLFW_KEY_A])
@@ -39,8 +51,8 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	{
 		position += right * velocity;
 	}
-
-	position.y = 10.0f;
+	if (!camaraAerea)
+		position.y = 10.0f;
 }
 
 void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
@@ -89,7 +101,6 @@ void Camera::update()
 
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));
-	front2 = glm::normalize(glm::cross(right, worldUp));
 }
 
 
