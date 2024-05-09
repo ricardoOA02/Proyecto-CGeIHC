@@ -69,6 +69,10 @@ Model CasaLink;
 
 //Vehiculos
 Model CarroCoraje_M;
+Model LlantaDelDer_M;
+Model LlantaDelIzq_M;
+Model LlantaTraDer_M;
+Model LlantaTraIzq_M;
 Model HeliceGuardian;
 Model CabezaGuardian;
 Model CuerpoGuardian;
@@ -84,6 +88,7 @@ Model Coraje_M;
 Model Lampara_M;
 
 //Flora
+Model Cardo_M;
 Model ArbolMuerto_M;
 Model Pino_M;
 Model Korok;
@@ -103,6 +108,20 @@ Skybox skybox;
 Material Material_brillante;
 Material Material_opaco;
 
+//Variables de animacion
+float rotLlantas;
+float rotLlantasOffset;
+float movCarro;
+float movCarroOffset;
+float rotCoche;
+float rotCocheOffset;
+bool carroAvanza;
+
+float movCardo;
+float movCardoOffset;
+float rotCardo;
+float rotCardoOffset;
+bool cardoAvanza;
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
@@ -378,7 +397,15 @@ int main()
 	ArbolMuerto_M = Model();
 	ArbolMuerto_M.LoadModel("Models/arbolmuerto.obj");
 	CarroCoraje_M = Model();
-	CarroCoraje_M.LoadModel("Models/Coraje/carro.obj");
+	CarroCoraje_M.LoadModel("Models/Coraje/carroBase.obj");
+	LlantaDelDer_M = Model();
+	LlantaDelDer_M.LoadModel("Models/Coraje/llantaDelDer.obj");
+	LlantaDelIzq_M = Model();
+	LlantaDelIzq_M.LoadModel("Models/Coraje/llantaDelIzq.obj");
+	LlantaTraDer_M = Model();
+	LlantaTraDer_M.LoadModel("Models/Coraje/llantaTraDer.obj");
+	LlantaTraIzq_M = Model();
+	LlantaTraIzq_M.LoadModel("Models/Coraje/llantaTraIzq.obj");
 	Coraje_M = Model();
 	Coraje_M.LoadModel("Models/Coraje/coraje.obj");
 	CasaCoraje_M = Model();
@@ -411,6 +438,8 @@ int main()
 	Slime.LoadModel("Models/TLOZ/Slime.obj");
 	CasaLink = Model();
 	CasaLink.LoadModel("Models/TLOZ/CasaVentanas.obj");
+	Cardo_M = Model();
+	Cardo_M.LoadModel("Models/Coraje/cardo.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -486,6 +515,21 @@ int main()
 	AudioCarro->setMinDistance(15.0f);
 	AudioCarro->setIsPaused(false);
 
+	//Animaciones
+	carroAvanza = true;
+	rotLlantas = 0.0f;
+	rotLlantasOffset = 5.0f;
+	movCarro = 0.0f;
+	movCarroOffset = 0.5f;
+
+	cardoAvanza = true;
+	movCardo = 0.0f;
+	movCardoOffset = 0.3f;
+	rotCardo = 0.0f;
+	rotCardoOffset = 4.0f;
+
+
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -494,10 +538,59 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		//Animaciones
+
+		//Animacion de carro
+		if (carroAvanza)
+		{
+			if (movCarro > -200.0f)
+			{
+				movCarro -= movCarroOffset * deltaTime;
+				rotLlantas -= rotLlantasOffset * deltaTime;
+			}
+			else
+				carroAvanza = false;
+		}
+		else
+		{
+			if (movCarro < 200.0f)
+			{
+				movCarro += movCarroOffset * deltaTime;
+				rotLlantas += rotLlantasOffset * deltaTime;
+			}
+			else
+				carroAvanza = true;
+		}
+		if (rotLlantas > 360.0f || rotLlantas < -360.0f)
+			rotLlantas = 0.0f;
+
+		//Animacion cardo
+		if (cardoAvanza)
+		{
+			if (movCardo > -100.0f)
+			{
+				movCardo -= movCardoOffset * deltaTime;
+				rotCardo += rotCardoOffset * deltaTime;
+			}
+			else
+				cardoAvanza = false;
+		}
+		else
+		{
+			if (movCardo < 100.0f)
+			{
+				movCardo += movCardoOffset * deltaTime;
+				rotCardo -= rotCardoOffset * deltaTime;
+			}
+			else
+				cardoAvanza = true;
+		}
+		if (rotCardo > 360.0f || rotCardo < -360.0f)
+			rotCardo = 0.0f;
+
 		//Recibir eventos del usuario
 		glfwPollEvents();
-		//camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		//camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+
 		
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -546,6 +639,7 @@ int main()
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
+		glm::mat4 modelAuxCarro(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -633,11 +727,39 @@ int main()
 
 		//Instancia Carro de Coraje
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -20.0f));
+		//model = glm::rotate(model, glm::radians(rotCoche), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -20.0f + movCarro));
+		modelAuxCarro = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CarroCoraje_M.RenderModel();
-		//Sonido del carro
+		
+		//Llanta Del Der
+		model = modelAuxCarro;
+		model = glm::translate(model, glm::vec3(-3.0f, 1.987f, 7.6f));
+		model = glm::rotate(model, glm::radians(rotLlantas), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		LlantaDelDer_M.RenderModel();
 
+		//Llanta Del Izq
+		model = modelAuxCarro;
+		model = glm::translate(model, glm::vec3(3.0f, 1.987f, 7.6f));
+		model = glm::rotate(model, glm::radians(rotLlantas), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		LlantaDelIzq_M.RenderModel();
+
+		//Llanta Tra Der
+		model = modelAuxCarro;
+		model = glm::translate(model, glm::vec3(-2.0f, 1.987f, -6.5f));
+		model = glm::rotate(model, glm::radians(rotLlantas), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		LlantaTraDer_M.RenderModel();
+
+		//Llanta Tra Izq
+		model = modelAuxCarro;
+		model = glm::translate(model, glm::vec3(2.0f, 1.987f, -6.5f));
+		model = glm::rotate(model, glm::radians(rotLlantas), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		LlantaTraIzq_M.RenderModel();
 
 		//Instancia Corage
 		model = glm::mat4(1.0);
@@ -743,6 +865,15 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Slime.RenderModel();
 		glDisable(GL_BLEND);
+
+
+		//Instancia Cardo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-15.0f + movCardo, 0.0f, 5.0f));
+		model = glm::rotate(model, glm::radians(rotCardo), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Cardo_M.RenderModel();
+
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
