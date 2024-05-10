@@ -134,6 +134,10 @@ float movPinguino;
 float movPinguinoOffset;
 float rotPinguino;
 float rotPinguinoOffset;
+float slimeSalto;
+float slimeAvanza;
+float slimeRotacion;
+float slimeOffset;
 bool pinguinoAvanza;
 bool inclinacion;
 
@@ -551,6 +555,10 @@ int main()
 	movPinguinoOffset = 0.1f;
 	rotPinguino = -15.0f;
 	rotPinguinoOffset = 3.0f;
+	slimeAvanza = 0.0f;
+	slimeRotacion = 0.0f;
+	slimeSalto = 0.0f;
+	slimeOffset = 1.0f;
 
 
 	////Loop mientras no se cierra la ventana
@@ -677,6 +685,34 @@ int main()
 				rotPinguino += rotPinguinoOffset * deltaTime;
 			else
 				inclinacion = true;
+		}
+
+		if (slimeSalto == 180.0f)
+		{
+			slimeSalto = 0.0f;
+		}
+		else
+		{
+			slimeSalto += 0.005f;
+		}
+
+
+		if (slimeAvanza == 360.0f)
+		{
+			slimeAvanza = 0.0f;
+		}
+		else
+		{
+			slimeAvanza += 0.0025f;
+		}
+
+		if (slimeRotacion == 360.0f)
+		{
+			slimeRotacion = 0.0f;
+		}
+		else
+		{
+			slimeRotacion += slimeOffset * deltaTime;
 		}
 
 		//Recibir eventos del usuario
@@ -947,7 +983,8 @@ int main()
 
 		//Instancia Slime
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 0.0f + 10 * sin(slimeAvanza)));
+		model = glm::rotate(model, glm::radians(90-slimeRotacion), glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//blending: transparencia o traslucidez
