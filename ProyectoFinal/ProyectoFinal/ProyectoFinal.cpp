@@ -149,6 +149,11 @@ float rotBarcoOffset;
 bool barcoAvanza;
 bool giroBarco;
 
+float offsetGuardian;
+float movGuardian;
+float rotGuardian;
+bool guardianAvanza;
+
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
@@ -577,6 +582,12 @@ int main()
 	movBarco = 0.0f;
 	rotBarco = -1.0f;
 	rotBarcoOffset = 1.0f;
+
+	offsetGuardian = 0.5f;
+	movGuardian = 0.0f;
+	rotGuardian = 0.0f;
+	guardianAvanza = true;
+
 	lastTime = glfwGetTime();
 
 	////Loop mientras no se cierra la ventana
@@ -675,6 +686,27 @@ int main()
 			rotXCardo = 0.0f;
 		if (rotZCardo > 360.0f || rotZCardo < -360.0f)
 			rotZCardo = 0.0f;
+		
+		// Animacion vehiculo aereo
+		if (movGuardian > 100.0f)
+		{
+			guardianAvanza = false;
+		}
+		else if (movGuardian < -100.0f)
+		{
+			guardianAvanza = true;
+		}
+
+		if (guardianAvanza)
+		{
+			movGuardian += offsetGuardian * deltaTime;
+			rotGuardian += 15 * offsetGuardian * deltaTime;
+		}
+		else
+		{
+			movGuardian -= offsetGuardian * deltaTime;
+			rotGuardian += 15 * offsetGuardian * deltaTime;
+		}
 
 		//Animación básica del Pinguino
 		if (pinguinoAvanza)
@@ -706,6 +738,7 @@ int main()
 				inclinacion = true;
 		}
 
+		// Animacion compleja slime
 		if (slimeSalto == 180.0f)
 		{
 			slimeSalto = 0.0f;
@@ -714,7 +747,6 @@ int main()
 		{
 			slimeSalto += 0.005f;
 		}
-
 
 		if (slimeAvanza == 360.0f)
 		{
@@ -734,6 +766,7 @@ int main()
 			slimeRotacion += slimeOffset * deltaTime;
 		}
 
+		// Animacion barco
 		if (barcoAvanza)
 		{
 			if (movBarco > -500.0f)
@@ -816,6 +849,7 @@ int main()
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
 		glm::mat4 modelAuxCarro(1.0);
+		glm::mat4 modelAuxGuardian(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -950,6 +984,37 @@ int main()
 		model = glm::scale(model, glm::vec3(8.0f, 8.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CasaCoraje_M.RenderModel();
+
+		// Instancia del guardian (TLOZ)
+		// cuerpo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f + movGuardian, 30.0f, 0.0f));
+		modelAuxGuardian = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		CuerpoGuardian.RenderModel();
+		// helice 1
+		model = modelAuxGuardian;
+		model = glm::translate(model, glm::vec3(0.0f, 12.0f, 10.2f));
+		model = glm::rotate(model, glm::radians(110 + rotGuardian), glm::vec3(0.0f, 1.0, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		HeliceGuardian.RenderModel();
+		// helice 2
+		model = modelAuxGuardian;
+		model = glm::translate(model, glm::vec3(-9.0f, 12.0f, -5.2f));
+		model = glm::rotate(model, glm::radians(rotGuardian), glm::vec3(0.0f, 1.0, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		HeliceGuardian.RenderModel();
+		// helice 3
+		model = modelAuxGuardian;
+		model = glm::translate(model, glm::vec3(9.0f, 12.0f, -5.2f));
+		model = glm::rotate(model, glm::radians(70 + rotGuardian), glm::vec3(0.0f, 1.0, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		HeliceGuardian.RenderModel();
+		// cabeza
+		model = modelAuxGuardian;
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		CabezaGuardian.RenderModel();
 
 		//Instancia Lampara
 		model = glm::mat4(1.0);
