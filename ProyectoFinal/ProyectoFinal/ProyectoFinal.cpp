@@ -76,6 +76,7 @@ Model LlantaTraIzq_M;
 Model HeliceGuardian;
 Model CabezaGuardian;
 Model CuerpoGuardian;
+Model Barco_M;
 
 //Objetos
 Model Banca_M;
@@ -140,6 +141,13 @@ float slimeRotacion;
 float slimeOffset;
 bool pinguinoAvanza;
 bool inclinacion;
+
+float movBarco;
+float movBarcoOffset;
+float rotBarco;
+float rotBarcoOffset;
+bool barcoAvanza;
+bool giroBarco;
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
@@ -458,6 +466,8 @@ int main()
 	CasaLink.LoadModel("Models/TLOZ/CasaVentanas.obj");
 	Cardo_M = Model();
 	Cardo_M.LoadModel("Models/Coraje/cardo.obj");
+	Barco_M = Model();
+	Barco_M.LoadModel("Models/horadeaven/barco.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -537,12 +547,12 @@ int main()
 	carroAvanza = true;
 	rotLlantas = 0.0f;
 	rotLlantasOffset = 5.0f;
-	movCarro = 0.0f;
+	movCarro = 1.0f;
 	movCarroOffset = 0.5f;
 
 	cardoAvanza = true;
 	cardoRetrocede = cardoIzquierda = cardoDerecha = false;
-	movXCardo = movZCardo = 0.0f;
+	movXCardo = movZCardo = 1.0f;
 	movXCardoOffset = movZCardoOffset = 0.3f;
 	rotXCardo = 0.0f;
 	rotXCardoOffset = 4.0f;
@@ -551,15 +561,23 @@ int main()
 
 	pinguinoAvanza = true;
 	inclinacion = true;
-	movPinguino = 0.0f;
+	movPinguino = 1.0f;
 	movPinguinoOffset = 0.1f;
 	rotPinguino = -15.0f;
 	rotPinguinoOffset = 3.0f;
+
 	slimeAvanza = 0.0f;
 	slimeRotacion = 0.0f;
 	slimeSalto = 0.0f;
 	slimeOffset = 1.0f;
 
+	barcoAvanza = true;
+	giroBarco = true;
+	movBarcoOffset = 0.3f;
+	movBarco = 0.0f;
+	rotBarco = -1.0f;
+	rotBarcoOffset = 1.0f;
+	lastTime = glfwGetTime();
 
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -569,6 +587,7 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		printf("%f\n", deltaTime);
 		//Animaciones
 
 		//Animacion de carro
@@ -714,6 +733,36 @@ int main()
 		{
 			slimeRotacion += slimeOffset * deltaTime;
 		}
+
+		if (barcoAvanza)
+		{
+			if (movBarco > -500.0f)
+				movBarco -= movBarcoOffset * deltaTime;
+			else
+				barcoAvanza = false;
+		}
+		else
+		{
+			if (movBarco < 500.0f)
+				movBarco += movBarcoOffset * deltaTime;
+			else
+				barcoAvanza = true;
+		}
+		if (giroBarco)
+		{
+			if (rotBarco > -15.0f)
+				rotBarco -= rotBarcoOffset * deltaTime;
+			else
+				giroBarco = false;
+		}
+		else
+		{
+			if (rotBarco < 15.0f)
+				rotBarco += rotBarcoOffset * deltaTime;
+			else
+				giroBarco = true;
+		}
+
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -997,12 +1046,22 @@ int main()
 
 
 		//Instancia Cardo
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-15.0f + movXCardo, 0.0f, 5.0f + movZCardo));
 		model = glm::rotate(model, glm::radians(rotXCardo), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(rotZCardo), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Cardo_M.RenderModel();
+
+		//Instancia Barco
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-50.0f + movBarco, 0.0f, -350.0f));
+		model = glm::rotate(model, glm::radians(rotBarco), glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Barco_M.RenderModel();
+
 
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
