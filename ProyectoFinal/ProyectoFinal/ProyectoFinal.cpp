@@ -60,30 +60,30 @@ Texture AgaveTexture;
 Texture CespesTexture;
 
 //Personajes
-Model CorajeBase_M;
+Model CorajeBase_M; //Hecho
 Model PataDer_M;
 Model PataIzq_M;
 Model ManoDer_M;
 Model ManoIzq_M;
 
 //Estructuras
-Model Piso_M;
-Model TorreTLOZ;
-Model CasaCoraje_M;
-Model Igloo_M;
+Model Piso_M;		//Hecho
+Model TorreTLOZ;	//Hecho	
+Model CasaCoraje_M;	//Hecho
+Model Igloo_M;		//Hecho
 Model Isla;
-Model CasaLink;
+Model CasaLink;		//Hecho
 
 //Vehiculos
-Model CarroCoraje_M;
+Model CarroCoraje_M;	//Hecho
 Model LlantaDelDer_M;
 Model LlantaDelIzq_M;
 Model LlantaTraDer_M;
 Model LlantaTraIzq_M;
-Model HeliceGuardian;
+Model HeliceGuardian;	//Hecho
 Model CabezaGuardian;
 Model CuerpoGuardian;
-Model Barco_M;
+Model Barco_M;			//Hecho
 
 //Objetos
 Model Banca_M;
@@ -400,7 +400,7 @@ int main()
 	CrearPlano();
 	CreateShaders();
 	CrearToroide(10.0f, 3.0f, 20, 20);
-	camera = Camera(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.0f, 0.5f, false);
+	camera = Camera(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.75f, 0.5f, false);
 	camera2 = Camera(glm::vec3(0.0f, 80.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -90.0f, 1.0f, 0.5f, true);
 	
 	//brickTexture = Texture("Textures/brick.png");
@@ -904,7 +904,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(500.0f, 1.0f, 400.0f));
+		model = glm::scale(model, glm::vec3(500.0f, 1.0f, 500.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		//CespesTexture.UseTexture();
@@ -965,7 +965,7 @@ int main()
 
 		//Instancia torre
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-25.0f, -0.3f, 20.0f));
+		model = glm::translate(model, glm::vec3(-578.0f, -0.3f, -62.8f));
 		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TorreTLOZ.RenderModel();
@@ -979,7 +979,7 @@ int main()
 		//Instancia Carro de Coraje
 		model = glm::mat4(1.0);
 		//model = glm::rotate(model, glm::radians(rotCoche), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -20.0f + movCarro));
+		model = glm::translate(model, glm::vec3(-113.2f, -1.0f, 248.7f + movCarro));
 		modelAuxCarro = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CarroCoraje_M.RenderModel();
@@ -1050,7 +1050,7 @@ int main()
 		
 		//Instancia Casa de Coraje
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(30.0f, -1.0f, -60.0f));
+		model = glm::translate(model, glm::vec3(356.65f, -1.0f, -188.7f));
 		model = glm::scale(model, glm::vec3(8.0f, 8.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CasaCoraje_M.RenderModel();
@@ -1058,7 +1058,7 @@ int main()
 		// Instancia del guardian (TLOZ)
 		// cuerpo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f + movGuardian, 30.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-329.7f + movGuardian, 30.0f, -42.06f));
 		modelAuxGuardian = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CuerpoGuardian.RenderModel();
@@ -1102,7 +1102,7 @@ int main()
 
 		//Instancia Igloo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(80.0f, -1.0f, -60.0f));
+		model = glm::translate(model, glm::vec3(641.5f, -1.0f, -193.15f));
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Igloo_M.RenderModel();
@@ -1116,23 +1116,26 @@ int main()
 
 		//Instancia caballo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 5.0f, 50.0f));
+		model = glm::translate(model, glm::vec3(-217.0f, 0.0f, 395.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Caballo.RenderModel();
 
 		//Instancia zorro
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(15.0f, 5.0f, 50.0f));
+		model = glm::translate(model, glm::vec3(-437.3f, 0.0f, 60.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Zorro.RenderModel();
 
 		//Instancia pinguino
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(25.0f + movPinguino, -1.0f, 50.0f));
+		model = glm::translate(model, glm::vec3(538.8f , -1.0f, -219.9f + movPinguino));
 		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
-		model = glm::rotate(model, glm::radians(-rotPinguino), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotPinguino), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pinguino_M.RenderModel();
 
@@ -1154,7 +1157,7 @@ int main()
 
 		//Instancia Casa
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(100.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-21.2f, 1.0f, -174.9f));
 		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//blending: transparencia o traslucidez
@@ -1167,7 +1170,7 @@ int main()
 
 		//Instancia Slime
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 0.0f + 10 * sin(slimeAvanza)));
+		model = glm::translate(model, glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
 		model = glm::rotate(model, glm::radians(90-slimeRotacion), glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1183,7 +1186,7 @@ int main()
 		//Instancia Cardo
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-15.0f + movXCardo, 0.0f, 5.0f + movZCardo));
+		model = glm::translate(model, glm::vec3(378.4 + movXCardo, 0.0f, -245 + movZCardo));
 		model = glm::rotate(model, glm::radians(rotXCardo), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(rotZCardo), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1191,13 +1194,17 @@ int main()
 
 		//Instancia Barco
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-50.0f + movBarco, 0.0f, -350.0f));
+		model = glm::translate(model, glm::vec3(-31.45 + movBarco, 0.0f, -447.85f));
 		model = glm::rotate(model, glm::radians(rotBarco), glm::vec3(1.0f, 0.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Barco_M.RenderModel();
 
-
+		//Instancia isla
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-326.4f, 40.0f, -178.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Isla.RenderModel();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
