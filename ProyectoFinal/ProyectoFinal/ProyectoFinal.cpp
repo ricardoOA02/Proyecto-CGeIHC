@@ -59,6 +59,13 @@ Texture pisoTexture;
 Texture AgaveTexture;
 Texture CespesTexture;
 
+//Personajes
+Model CorajeBase_M;
+Model PataDer_M;
+Model PataIzq_M;
+Model ManoDer_M;
+Model ManoIzq_M;
+
 //Estructuras
 Model Piso_M;
 Model TorreTLOZ;
@@ -85,7 +92,6 @@ Model Bote_Basura_M;
 Model Fuente_M;
 Model Mesa;
 Model Bebedero;
-Model Coraje_M;
 Model Lampara_M;
 
 //Flora
@@ -153,6 +159,10 @@ float offsetGuardian;
 float movGuardian;
 float rotGuardian;
 bool guardianAvanza;
+
+float rotCoraje;
+float rotCorajeOffset;
+bool giroCoraje;
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
@@ -437,8 +447,16 @@ int main()
 	LlantaTraDer_M.LoadModel("Models/Coraje/llantaTraDer.obj");
 	LlantaTraIzq_M = Model();
 	LlantaTraIzq_M.LoadModel("Models/Coraje/llantaTraIzq.obj");
-	Coraje_M = Model();
-	Coraje_M.LoadModel("Models/Coraje/coraje.obj");
+	CorajeBase_M = Model();
+	CorajeBase_M.LoadModel("Models/Coraje/corajeBase.obj");
+	PataDer_M = Model();
+	PataDer_M.LoadModel("Models/Coraje/pataDer.obj");
+	PataIzq_M = Model();
+	PataIzq_M.LoadModel("Models/Coraje/pataIzq.obj");
+	ManoDer_M = Model();
+	ManoDer_M.LoadModel("Models/Coraje/manoDer.obj");
+	ManoIzq_M = Model();
+	ManoIzq_M.LoadModel("Models/Coraje/manoIzq.obj");
 	CasaCoraje_M = Model();
 	CasaCoraje_M.LoadModel("Models/Coraje/casaCoraje.obj");
 	Lampara_M = Model();
@@ -588,6 +606,10 @@ int main()
 	rotGuardian = 0.0f;
 	guardianAvanza = true;
 
+	rotCorajeOffset = 0.7f;
+	rotCoraje = 0.0f;
+	giroCoraje = true;
+
 	lastTime = glfwGetTime();
 
 	////Loop mientras no se cierra la ventana
@@ -598,7 +620,7 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
-		printf("%f\n", deltaTime);
+		//printf("%f\n", deltaTime);
 		//Animaciones
 
 		//Animacion de carro
@@ -796,7 +818,26 @@ int main()
 				giroBarco = true;
 		}
 
+		//Animacion personaje
+		if (mainWindow.getMovimientoEdo() && mainWindow.getCamaraEdo())
+		{
+			if (giroCoraje)
+			{
+				if (rotCoraje > -15.0f)
+					rotCoraje -= rotCorajeOffset * deltaTime;
+				else
+					giroCoraje = false;
+			}
+			else
+			{
+				if (rotCoraje < 15.0f)
+					rotCoraje += rotCorajeOffset * deltaTime;
+				else
+					giroCoraje = true;
+			}
+		}
 
+		
 		//Recibir eventos del usuario
 		glfwPollEvents();
 
@@ -971,12 +1012,41 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		LlantaTraIzq_M.RenderModel();
 
-		//Instancia Corage
+		//Instancia Cuerpo Coraje
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x + glm::cos(glm::radians(camera.getYaw())) * 8.0, camera.getCameraPosition().y - 11.0f, camera.getCameraPosition().z + glm::sin(glm::radians(camera.getYaw())) * 8.0));
-		model = glm::rotate(model, glm::radians(90.0f - camera.getYaw()), glm::vec3(0.0f, 1.0, 0.0f));
+		model = glm::rotate(model, glm::radians(180.0f - camera.getYaw()), glm::vec3(0.0f, 1.0, 0.0f));
+		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Coraje_M.RenderModel();
+		CorajeBase_M.RenderModel();
+
+		//Pata Der Coraje
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 1.15f, 0.5f));
+		model = glm::rotate(model, glm::radians(rotCoraje), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		PataDer_M.RenderModel();
+
+		//Pata Izq Coraje
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 1.131f, -0.5f));
+		model = glm::rotate(model, glm::radians(-rotCoraje), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		PataIzq_M.RenderModel();
+
+		//Mano Der Coraje
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.889f));
+		model = glm::rotate(model, glm::radians(-rotCoraje), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		ManoIzq_M.RenderModel();
+
+		//Mano Izq Coraje
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 2.51f, -0.89f));
+		model = glm::rotate(model, glm::radians(rotCoraje), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		ManoDer_M.RenderModel();
 		
 		//Instancia Casa de Coraje
 		model = glm::mat4(1.0);

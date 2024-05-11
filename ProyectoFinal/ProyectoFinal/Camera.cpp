@@ -51,7 +51,7 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	{
 		position += right * velocity;
 	}
-	if (!camaraAerea)
+	if (!	camaraAerea)
 		position.y = 10.0f;
 }
 
