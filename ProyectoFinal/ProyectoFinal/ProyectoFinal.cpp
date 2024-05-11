@@ -98,6 +98,7 @@ Model EspadaMaestra;
 Model Slime;
 
 Skybox skybox;
+Skybox night;
 
 //materiales
 Material Material_brillante;
@@ -414,12 +415,12 @@ int main()
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
-	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_rt.tga");
-	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_lf.tga");
-	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_dn.tga");
-	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_up.tga");
-	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_ft.tga");
-	skyboxFaces.push_back("Textures/Skybox/skybox_mountains_bk.tga");
+	skyboxFaces.push_back("Textures/Skybox/skybox_night_rt.tga");
+	skyboxFaces.push_back("Textures/Skybox/skybox_night_lf.tga");
+	skyboxFaces.push_back("Textures/Skybox/skybox_night_dn.tga");
+	skyboxFaces.push_back("Textures/Skybox/skybox_night_up.tga");
+	skyboxFaces.push_back("Textures/Skybox/skybox_night_ft.tga");
+	skyboxFaces.push_back("Textures/Skybox/skybox_night_bk.tga");
 
 	skybox = Skybox(skyboxFaces);
 
