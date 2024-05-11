@@ -406,7 +406,7 @@ int main()
 	Pinguino_M = Model();
 	Pinguino_M.LoadModel("Models/horadeaven/gunter.obj");
 	EspadaMaestra = Model();
-	EspadaMaestra.LoadModel("Models/TLOZ/EspadaMaestra.obj");
+	EspadaMaestra.LoadModel("Models/TLOZ/MasterSword.obj");
 	Slime = Model();
 	Slime.LoadModel("Models/TLOZ/Slime.obj");
 	CasaLink = Model();
