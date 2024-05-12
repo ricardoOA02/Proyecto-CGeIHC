@@ -86,29 +86,31 @@ Model CuerpoGuardian;
 Model Barco_M;			//Hecho
 
 //Objetos
-Model Banca_M;
-Model Kiosko_M;
-Model Bote_Basura_M;
-Model Fuente_M;
-Model Mesa;
-Model Bebedero;
-Model Lampara_M;
-Model Cartel_M;
+Model Banca_M;			//Hecho
+Model Kiosko_M;			//Hecho
+Model Bote_Basura_M;	//Hecho
+Model Fuente_M;			//Hecho
+Model Mesa;				//Hecho
+Model Bebedero;			//Hecho
+Model Lampara_M;		//Hecho
+Model Cartel_M;			//Hecho
+Model Cerca_M;			//Hecho
+Model Panel_M;			//Hecho
 
 //Flora
-Model Cardo_M;
+Model Cardo_M;			//Hecho
 Model ArbolMuerto_M;
 Model Pino_M;
 Model Korok;
 
 //Fauna
-Model Caballo;
-Model Zorro;
-Model Pinguino_M;
+Model Caballo;			//Hecho
+Model Zorro;			//Hecho
+Model Pinguino_M;		//Hecho
 
 //Otros
 Model EspadaMaestra;
-Model Slime;
+Model Slime;			//Hecho
 
 Skybox skybox;
 
@@ -401,7 +403,7 @@ int main()
 	CrearPlano();
 	CreateShaders();
 	CrearToroide(10.0f, 3.0f, 20, 20);
-	camera = Camera(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.0f, 0.5f, false);
+	camera = Camera(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.5f, 0.5f, false);
 	camera2 = Camera(glm::vec3(0.0f, 80.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -90.0f, 1.0f, 0.5f, true);
 	
 	//brickTexture = Texture("Textures/brick.png");
@@ -494,6 +496,10 @@ int main()
 	Barco_M.LoadModel("Models/horadeaven/barco.obj");
 	Cartel_M = Model();
 	Cartel_M.LoadModel("Models/Cartel.obj");
+	Cerca_M = Model();
+	Cerca_M.LoadModel("Models/cerca.obj");
+	Panel_M = Model();
+	Panel_M.LoadModel("Models/panel.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -1004,15 +1010,49 @@ int main()
 
 		//Instancia Kiosko
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(20.0f, -1.0f, -4.0f));
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::translate(model, glm::vec3(-322.0f, -1.0f, 321.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Kiosko_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(160.0f, -1.0f, -308.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Kiosko_M.RenderModel();
 
 		//Instancia Bote de Basura
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-5.0f, -0.7f, -4.0f));
-		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		model = glm::translate(model, glm::vec3(-138.5f, -0.7f, -19.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-462.0f, -0.7f, -19.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-138.5f, -0.7f, -352.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-457.0f, -0.7f, -320.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-459.0f, -0.7f, 443.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-524.0f, -0.7f, -211.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_Basura_M.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(525.0f, -0.7f, -261.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Bote_Basura_M.RenderModel();
 
@@ -1028,25 +1068,49 @@ int main()
 		Fuente_M.RenderModel();
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-5.0f, -0.3f, -18.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Fuente_M.RenderModel();
-
-		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-583.6f, -0.3f, -144.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Fuente_M.RenderModel();
 
 		//Instancia mesa
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-10.0f, -0.3f, -8.0f));
-		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		model = glm::translate(model, glm::vec3(-425.0f, -0.3f, 75.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-585.0f, -0.3f, -100.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-419.0f, -0.3f, 320.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(327.0f, -0.3f, -73.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(641.0f, -0.3f, -341.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Mesa.RenderModel();
 
 		//Instancia Bebedero
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-15.0f, -0.3f, 8.0f));
+		model = glm::translate(model, glm::vec3(-186.0f, -0.3f, 40.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bebedero.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(540.0f, -0.3f, -22.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bebedero.RenderModel();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-192.0f, -0.3f, -227.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Bebedero.RenderModel();
 
@@ -1175,8 +1239,34 @@ int main()
 
 		//Instancia Lampara
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(50.0f, -1.0f, -60.0f));
-		model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		model = glm::translate(model, glm::vec3(-69.0f, -1.0f, 45.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(527.0f, -1.0f, -343.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-458.0f, -1.0f, -317.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-458.0f, -1.0f, -47.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-190.0f, -1.0f, 141.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-190.0f, -1.0f, 41.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Lampara_M.RenderModel();
 
@@ -1228,7 +1318,7 @@ int main()
 
 		//Instancia espada maestra
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(30.0f, -1.0f, 50.0f));
+		model = glm::translate(model, glm::vec3(-320.0f, -1.0f, -283.0f));
 		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		EspadaMaestra.RenderModel();
@@ -1299,6 +1389,17 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Cartel_M.RenderModel();
 
+		//Instancia cerca
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(336.0f, 0.0f, -265.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Cerca_M.RenderModel();
+
+		//Instancia panel solar
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(629.0f, 0.0f, -17.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Panel_M.RenderModel();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
