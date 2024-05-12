@@ -65,6 +65,12 @@ Model PataDer_M;	//Hecho
 Model PataIzq_M;	//Hecho
 Model ManoDer_M;	//Hecho
 Model ManoIzq_M;	//Hecho
+Model Link;
+Model BIzq;
+Model BDer;
+Model PIzq;
+Model PDer;
+
 
 //Estructuras
 Model Piso_M;		//Hecho	
@@ -447,7 +453,16 @@ int main()
 	Cerca_M.LoadModel("Models/cerca.obj");
 	Panel_M = Model();
 	Panel_M.LoadModel("Models/panel.obj");
-
+	Link = Model();
+	Link.LoadModel("Models/TLOZ/Link/CuerpoLink.obj");
+	BIzq = Model();
+	BIzq.LoadModel("Models/TLOZ/Link/BrazoIzquierdo.obj");
+	BDer = Model();
+	BDer.LoadModel("Models/TLOZ/Link/BrazoDerecho.obj");
+	PDer = Model();
+	PDer.LoadModel("Models/TLOZ/Link/PieDerecho.obj");
+	PIzq = Model();
+	PIzq.LoadModel("Models/TLOZ/Link/PieIzquierdo.obj");
 
 	TorreTLOZ = Model();
 	TorreTLOZ.LoadModel("Models/TLOZ/TorreDeMapeo.obj");
@@ -1014,6 +1029,7 @@ int main()
 		glm::mat4 modelaux(1.0);
 		glm::mat4 modelAuxCarro(1.0);
 		glm::mat4 modelAuxGuardian(1.0);
+		glm::mat4 modelAuxLink(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
@@ -1671,6 +1687,38 @@ int main()
 		model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		EspadaMaestra.RenderModel();
+
+		//Instancia Link
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-578.0f, 2.2f, -62.8f));
+		modelAuxLink = model;
+		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Link.RenderModel();
+
+		model = modelAuxLink;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		BDer.RenderModel();
+
+		model = modelAuxLink;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		BIzq.RenderModel();
+
+		model = modelAuxLink;
+		model = glm::translate(model, glm::vec3(-0.3f, -1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		PDer.RenderModel();
+
+		model = modelAuxLink;
+		model = glm::translate(model, glm::vec3(0.3f, -0.95f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		PIzq.RenderModel();
 
 		//Instancia toroide
 		//model = glm::mat4(1.0);
