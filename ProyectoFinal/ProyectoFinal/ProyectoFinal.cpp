@@ -550,10 +550,10 @@ int main()
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
-	// Luz numero 2 POR DECLARAR
-	pointLights[1] = PointLight(1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f,
-		-6.0f, 1.5f, 1.5f,
+	// Luz casa finn y jake
+	pointLights[1] = PointLight(0.99609375f, 0.87109375f, 0.0f,
+		0.0f, 0.9f,
+		-355.5f, 13.0f, 197.0f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
@@ -577,7 +577,7 @@ int main()
 	spotLightCount++;
 
 	// Espada maestra
-	spotLights[1] = SpotLight(0.99609375f, 0.87109375f, 0.0,
+	spotLights[1] = SpotLight(0.99609375f, 0.87109375f, 0.0f,
 		1.0f, 2.0f,
 		-320.0f, 15.0f, -283.0f, //Pos
 		0.0f, -5.0f, 0.0f,
@@ -630,12 +630,12 @@ int main()
 	AudioCarro->setIsPaused(false);
 
 	// Variables para el ciclo dia/noche
-	float interpolation = 0.00005;
+	float interpolation = 0.00025;
 	bool colorchange = true;
 	GLfloat red = 1.0f, green = 1.0f, blue = 1.0f;
 	GLfloat nightRed = 0.07421875f, nightGreen = 0.09375f, nightBlue = 0.3828125f;
 	GLfloat dayRed = 1.0f, dayGreen = 1.0f, dayBlue = 1.0f;
-
+	bool dayChange = true;
 	//Animaciones
 	carroAvanza = true;
 	rotLlantas = 0.0f;
@@ -703,11 +703,19 @@ int main()
 		// Aumenta o disminuye la variable de interpolacion para el color
 		if (colorchange)
 		{
-			interpolation += 0.00005;
+			interpolation += 0.00025 * deltaTime;
 		}
 		else
 		{
-			interpolation -= 0.00005;
+			interpolation -= 0.00025 * deltaTime;
+		}
+		if (interpolation >= 0.5 and interpolation <= 1.0)
+		{
+			dayChange = true;
+		}
+		else
+		{
+			dayChange = false;
 		}
 		// Hace el calculo de los valores del color
 		red = dayRed + (nightRed - dayRed) * interpolation;
@@ -942,7 +950,7 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//Cambio de skybox
-		if (false)
+		if (!dayChange)
 			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 		else
 			nightSkybox.DrawSkybox(camera.calculateViewMatrix(), projection);
@@ -976,7 +984,7 @@ int main()
 
 		// Información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+		
 
 		// Control de iluminacion PointLights
 		if (mainWindow.getLuzCasa())
@@ -986,6 +994,15 @@ int main()
 		else
 		{
 			shaderList[0].SetPointLights(pointLights, pointLightCount - 1);
+		}
+
+		if (dayChange)
+		{
+			shaderList[0].SetSpotLights(spotLights, spotLightCount);
+		}
+		else 
+		{
+			shaderList[0].SetSpotLights(spotLights, spotLightCount - 2);
 		}
 
 		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
@@ -1617,10 +1634,24 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Caballo.RenderModel();
 
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-200.0f, 0.0f, 340.0f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Caballo.RenderModel();
+
 		//Instancia zorro
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-437.3f, 0.0f, 60.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Zorro.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-410.3f, 0.0f, 75.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Zorro.RenderModel();
