@@ -71,8 +71,9 @@ Model Piso_M;		//Hecho
 Model TorreTLOZ;	//Hecho	
 Model CasaCoraje_M;	//Hecho
 Model Igloo_M;		//Hecho
-Model Isla;
+Model Isla;			//Hecho
 Model CasaLink;		//Hecho
+Model CasaFinn_M;	//Hecho
 
 //Vehiculos
 Model CarroCoraje_M;	//Hecho
@@ -500,6 +501,8 @@ int main()
 	Cerca_M.LoadModel("Models/cerca.obj");
 	Panel_M = Model();
 	Panel_M.LoadModel("Models/panel.obj");
+	CasaFinn_M = Model();
+	CasaFinn_M.LoadModel("Models/horadeaven/casa.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -1508,6 +1511,12 @@ int main()
 		model = glm::translate(model, glm::vec3(629.0f, 0.0f, -17.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Panel_M.RenderModel();
+
+		//Instancia casa Finn
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-324.0f, 0.0f, 123.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		CasaFinn_M.RenderModel();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
