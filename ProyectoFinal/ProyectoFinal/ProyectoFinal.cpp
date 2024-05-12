@@ -538,9 +538,9 @@ int main()
 	pointLightCount++;
 
 	// Luz casa de coraje
-	pointLights[1] = PointLight(1.0f, 1.0f, 1.0f,
-		0.0f, 1.0f,
-		356.65f, 10.0f, -188.7f,
+	pointLights[2] = PointLight(0.94921875f, 0.875f, 0.4140625f,
+		1.0f, 1.0f,
+		342.00f, 10.0f, -192.7f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
@@ -910,8 +910,17 @@ int main()
 
 		// Información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+
+		// Control de iluminacion PointLights
+		if (mainWindow.getLuzCasa())
+		{
+			shaderList[0].SetPointLights(pointLights, pointLightCount);
+		}
+		else
+		{
+			shaderList[0].SetPointLights(pointLights, pointLightCount - 1);
+		}
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);

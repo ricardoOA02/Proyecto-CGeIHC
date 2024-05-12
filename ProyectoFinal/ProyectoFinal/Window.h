@@ -22,6 +22,7 @@ public:
 	GLfloat getPersonajePosZ() { return personajePosZ; };
 	GLboolean getCamaraEdo() { return camaraEdo; };
 	GLboolean getMovimientoEdo() { return movimientoEdo; };
+	GLboolean getLuzCasa() { return luzCasaEdo; };
 	
 	~Window();
 private: 
@@ -37,7 +38,7 @@ private:
 	GLfloat muevex;
 	GLfloat personajePosX;
 	GLfloat personajePosZ;
-	GLboolean camaraEdo, movimientoEdo;
+	GLboolean camaraEdo, movimientoEdo, luzCasaEdo;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
