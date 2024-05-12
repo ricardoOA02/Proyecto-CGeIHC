@@ -544,25 +544,40 @@ int main()
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
-	//356.65f, -1.0f, -188.7f
-	//Slime -570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)
-
 	unsigned int spotLightCount = 0;
-	//linterna
-	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
-		0.0f, 2.0f,
-		0.0f, 0.0f, 0.0f,
+	// Guardian
+	spotLights[0] = SpotLight(0.85546875f, 0.1171875f, 0.1171875f,
+		1.0f, 2.0f,
+		-329.7f, 25.0f, -42.06f,
 		0.0f, -1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		5.0f);
+		1.0f, 0.0f, 0.00003f,
+		20.0f);
 	spotLightCount++;
 
-	//luz fija
-	spotLights[1] = SpotLight(0.0f, 1.0f, 0.0f,
+	// Espada maestra
+	spotLights[1] = SpotLight(0.99609375f, 0.87109375f, 0.0,
 		1.0f, 2.0f,
-		5.0f, 10.0f, 0.0f,
+		-320.0f, 15.0f, -283.0f, //Pos
 		0.0f, -5.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0005f,
+		50.0f);
+	spotLightCount++;
+
+	// Camioneta
+	// Derecha
+	spotLights[2] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
+		1.0f, 2.0f,
+		-110.2f, 3.5f, 254.7f, // pos -110.2f, -1.0f, 248.7f + movCarro
+		0.0f, 0.0f, 5.0f,
+		1.0f, 0.0f, 0.0005f,
+		15.0f);
+	spotLightCount++;
+	// Izquierda
+	spotLights[3] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
+		1.0f, 2.0f,
+		-116.2f, 3.5f, 254.7f, // pos -116.2f, -1.0f, 248.7f + movCarro
+		0.0f, 0.0f, 5.0f,
+		1.0f, 0.0f, 0.0005f,
 		15.0f);
 	spotLightCount++;
 	
@@ -921,6 +936,10 @@ int main()
 		{
 			shaderList[0].SetPointLights(pointLights, pointLightCount - 1);
 		}
+		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
+		spotLights[0].SetPos(glm::vec3(-329.7f + movGuardian, 20.0f, -42.06f));
+		spotLights[2].SetPos(glm::vec3(-110.2f, 3.5f, 254.7f + movCarro));
+		spotLights[3].SetPos(glm::vec3(-116.2f, 3.5f, 254.7f + movCarro));
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -1385,7 +1404,6 @@ int main()
 		Slime.RenderModel();
 		glDisable(GL_BLEND);
 		// Luz ligada al slime
-		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
 
 		//Instancia Cardo
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
