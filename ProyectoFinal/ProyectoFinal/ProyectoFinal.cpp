@@ -114,6 +114,7 @@ Model EspadaMaestra;	//Hecho
 Model Slime;			//Hecho
 
 Skybox skybox;
+Skybox nightSkybox;
 
 //materiales
 Material Material_brillante;
@@ -520,40 +521,85 @@ int main()
 
 	skybox = Skybox(skyboxFaces);
 
+	std::vector<std::string> skyboxFacesNight;
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_night_rt.tga");
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_night_lf.tga");
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_night_dn.tga");
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_night_up.tga");
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_night_ft.tga");
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_night_bk.tga");
+
+	nightSkybox = Skybox(skyboxFacesNight);
+
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
 
 
 	//luz direccional, sólo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-		0.3f, 0.3f,
-		0.0f, 0.0f, -1.0f);
+		0.9f, 0.03f,
+		0.0f, -1.0f, 0.0f);
 
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
 	//Declaración de primer luz puntual
+	// Luz slime
 	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f,
+		-570.3f, 1.0f, 53.85f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	// Luz numero 2 POR DECLARAR
+	pointLights[1] = PointLight(1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f,
 		-6.0f, 1.5f, 1.5f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
+	// Luz casa de coraje
+	pointLights[2] = PointLight(0.94921875f, 0.875f, 0.4140625f,
+		1.0f, 1.0f,
+		342.00f, 10.0f, -192.7f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	
+
 	unsigned int spotLightCount = 0;
-	//linterna
-	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
-		0.0f, 2.0f,
-		0.0f, 0.0f, 0.0f,
+	// Guardian
+	spotLights[0] = SpotLight(0.85546875f, 0.1171875f, 0.1171875f,
+		1.0f, 2.0f,
+		-329.7f, 25.0f, -42.06f,
 		0.0f, -1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		5.0f);
+		1.0f, 0.0f, 0.00003f,
+		20.0f);
 	spotLightCount++;
 
-	//luz fija
-	spotLights[1] = SpotLight(0.0f, 1.0f, 0.0f,
+	// Espada maestra
+	spotLights[1] = SpotLight(0.99609375f, 0.87109375f, 0.0,
 		1.0f, 2.0f,
-		5.0f, 10.0f, 0.0f,
+		-320.0f, 15.0f, -283.0f, //Pos
 		0.0f, -5.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0005f,
+		50.0f);
+	spotLightCount++;
+
+	// Camioneta
+	// Derecha
+	spotLights[2] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
+		1.0f, 2.0f,
+		-110.2f, 3.5f, 254.7f, // pos -110.2f, -1.0f, 248.7f + movCarro
+		0.0f, 0.0f, 5.0f,
+		1.0f, 0.0f, 0.0005f,
+		15.0f);
+	spotLightCount++;
+	// Izquierda
+	spotLights[3] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
+		1.0f, 2.0f,
+		-116.2f, 3.5f, 254.7f, // pos -116.2f, -1.0f, 248.7f + movCarro
+		0.0f, 0.0f, 5.0f,
+		1.0f, 0.0f, 0.0005f,
 		15.0f);
 	spotLightCount++;
 	
@@ -582,6 +628,13 @@ int main()
 
 	AudioCarro->setMinDistance(15.0f);
 	AudioCarro->setIsPaused(false);
+
+	// Variables para el ciclo dia/noche
+	float interpolation = 0.00005;
+	bool colorchange = true;
+	GLfloat red = 1.0f, green = 1.0f, blue = 1.0f;
+	GLfloat nightRed = 0.07421875f, nightGreen = 0.09375f, nightBlue = 0.3828125f;
+	GLfloat dayRed = 1.0f, dayGreen = 1.0f, dayBlue = 1.0f;
 
 	//Animaciones
 	carroAvanza = true;
@@ -636,6 +689,32 @@ int main()
 		deltaTime = now - lastTime;
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
+
+		// Ciclo dia/noche
+		// Comprueba si se llego al limite de dia o noche
+		if (interpolation > 1)
+		{
+			colorchange = false;
+		}
+		else if (interpolation < 0)
+		{
+			colorchange = true;
+		}
+		// Aumenta o disminuye la variable de interpolacion para el color
+		if (colorchange)
+		{
+			interpolation += 0.00005;
+		}
+		else
+		{
+			interpolation -= 0.00005;
+		}
+		// Hace el calculo de los valores del color
+		red = dayRed + (nightRed - dayRed) * interpolation;
+		green = dayGreen + (nightGreen - dayGreen) * interpolation;
+		blue = dayBlue + (nightBlue - dayBlue) * interpolation;
+		// Establece el color de la luz
+		mainLight.SetColor(glm::vec3(red, green, blue));
 
 		//printf("%f\n", deltaTime);
 		//Animaciones
@@ -889,20 +968,25 @@ int main()
 			glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera2.calculateViewMatrix()));
 			glUniform3f(uniformEyePosition, camera2.getCameraPosition().x, camera2.getCameraPosition().y, camera2.getCameraPosition().z);
 		}
-		//glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		//glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
-		//
-
-		// Luz ligada a la cámara de tipo flash
-		// sirve para que en tiempo de ejecución (dentro del while) se cambien propiedades de la luz
-		glm::vec3 lowerLight = camera.getCameraPosition();
-		lowerLight.y -= 0.3f;
-		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
 		// Información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
+
+		// Control de iluminacion PointLights
+		if (mainWindow.getLuzCasa())
+		{
+			shaderList[0].SetPointLights(pointLights, pointLightCount);
+		}
+		else
+		{
+			shaderList[0].SetPointLights(pointLights, pointLightCount - 1);
+		}
+
+		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
+		spotLights[0].SetPos(glm::vec3(-329.7f + movGuardian, 20.0f, -42.06f));
+		spotLights[2].SetPos(glm::vec3(-110.2f, 3.5f, 254.7f + movCarro));
+		spotLights[3].SetPos(glm::vec3(-116.2f, 3.5f, 254.7f + movCarro));
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -1587,7 +1671,6 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Slime.RenderModel();
 		glDisable(GL_BLEND);
-
 
 		//Instancia Cardo
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);

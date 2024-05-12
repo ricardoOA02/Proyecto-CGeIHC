@@ -22,6 +22,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	personajePosZ = 0.0f;
 	camaraEdo = true;
 	movimientoEdo = false;
+	luzCasaEdo = true;
 
 }
 int Window::Initialise()
@@ -138,7 +139,10 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->camaraEdo = !theWindow->camaraEdo;
 	}
 	
-
+	if (key == GLFW_KEY_L && action == GLFW_PRESS)
+	{
+		theWindow->luzCasaEdo = !theWindow->luzCasaEdo;
+	}
 
 	if (key >= 0 && key < 1024)
 	{
