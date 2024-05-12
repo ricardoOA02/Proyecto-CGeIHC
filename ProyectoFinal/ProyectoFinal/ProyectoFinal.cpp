@@ -61,10 +61,10 @@ Texture CespesTexture;
 
 //Personajes
 Model CorajeBase_M; //Hecho
-Model PataDer_M;
-Model PataIzq_M;
-Model ManoDer_M;
-Model ManoIzq_M;
+Model PataDer_M;	//Hecho
+Model PataIzq_M;	//Hecho
+Model ManoDer_M;	//Hecho
+Model ManoIzq_M;	//Hecho
 
 //Estructuras
 Model Piso_M;		//Hecho
@@ -77,13 +77,13 @@ Model CasaFinn_M;	//Hecho
 
 //Vehiculos
 Model CarroCoraje_M;	//Hecho
-Model LlantaDelDer_M;
-Model LlantaDelIzq_M;
-Model LlantaTraDer_M;
-Model LlantaTraIzq_M;
+Model LlantaDelDer_M;	//Hecho
+Model LlantaDelIzq_M;	//Hecho
+Model LlantaTraDer_M;	//Hecho
+Model LlantaTraIzq_M;	//Hecho
 Model HeliceGuardian;	//Hecho
-Model CabezaGuardian;
-Model CuerpoGuardian;
+Model CabezaGuardian;	//Hecho
+Model CuerpoGuardian;	//Hecho
 Model Barco_M;			//Hecho
 
 //Objetos
@@ -100,9 +100,9 @@ Model Panel_M;			//Hecho
 
 //Flora
 Model Cardo_M;			//Hecho
-Model ArbolMuerto_M;
-Model Pino_M;
-Model Korok;
+Model ArbolMuerto_M;	//Hecho
+Model Pino_M;			//Hecho
+Model Korok;			//Hecho
 
 //Fauna
 Model Caballo;			//Hecho
@@ -110,7 +110,7 @@ Model Zorro;			//Hecho
 Model Pinguino_M;		//Hecho
 
 //Otros
-Model EspadaMaestra;
+Model EspadaMaestra;	//Hecho
 Model Slime;			//Hecho
 
 Skybox skybox;
@@ -1383,8 +1383,102 @@ int main()
 
 		//Instancia Pinos
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(50.0f, -1.0f, -60.0f));
-		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		model = glm::translate(model, glm::vec3(-398.0f, -1.0f, 67.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-371.0f, -1.0f, 261.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-604.0f, -1.0f, -10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(594.0f, -1.0f, -142.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-418.0f, -1.0f, -93.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-252.0f, -1.0f, -110.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-382.0f, -1.0f, -262.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-240.0f, -1.0f, -290.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-378.0f, -1.0f, 370.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-262.0f, -1.0f, 315.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-390.0f, -1.0f, 409.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-227.0f, -1.0f, 310.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-360.0f, -1.0f, -247.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-632.0f, -1.0f, -128.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-284.0f, -1.0f, -142.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-350.0f, -1.0f, 90.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-360.0f, -1.0f, 310.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-543.0f, -1.0f, 227.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-584.0f, -1.0f, 129.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pino_M.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-523.0f, -1.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Pino_M.RenderModel();
 
@@ -1397,8 +1491,27 @@ int main()
 
 		//Instancia korok
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(10.0f, 4.0f, 10.0f));
-		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		model = glm::translate(model, glm::vec3(-323.0f, 0.0f, -88.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Korok.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-580.0f, 0.0f, -117.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Korok.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(441.0f, 0.0f, -55.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Korok.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(550.0f, 0.0f, -13.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Korok.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-240.0f, 0.0f, 451.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Korok.RenderModel();
 
