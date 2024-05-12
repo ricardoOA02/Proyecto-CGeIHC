@@ -414,10 +414,6 @@ int main()
 	camera = Camera(glm::vec3(-326.0f, 0.0f, 458.2f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 1.5f, 0.5f, false);
 	camera2 = Camera(glm::vec3(0.0f, 80.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -90.0f, 1.0f, 0.5f, true);
 	
-	//brickTexture = Texture("Textures/brick.png");
-	//brickTexture.LoadTextureA();
-	//dirtTexture = Texture("Textures/dirt.png");
-	//dirtTexture.LoadTextureA();
 	plainTexture = Texture("Textures/plain.png");
 	plainTexture.LoadTextureA();
 	pisoTexture = Texture("Textures/piso.tga");
@@ -432,7 +428,6 @@ int main()
 	//Modelos
 	Piso_M = Model();
 	Piso_M.LoadModel("Models/piso.obj");
-
 	Banca_M = Model();
 	Banca_M.LoadModel("Models/banca.obj");
 	Kiosko_M = Model();
@@ -463,7 +458,6 @@ int main()
 	PDer.LoadModel("Models/TLOZ/Link/PieDerecho.obj");
 	PIzq = Model();
 	PIzq.LoadModel("Models/TLOZ/Link/PieIzquierdo.obj");
-
 	TorreTLOZ = Model();
 	TorreTLOZ.LoadModel("Models/TLOZ/TorreDeMapeo.obj");
 	ArbolMuerto_M = Model();
@@ -640,6 +634,7 @@ int main()
 	//Audio del carro
 	irrklang::vec3df posicion(20.0f, -1.0f, -20.0f);
 	irrklang::ISound* AudioCarro = engine->play3D("audios/carro.flac", posicion, true, true);
+	irrklang::vec3df posAudioCarro(0.0f, 0.0f, 0.0f);
 
 	AudioCarro->setMinDistance(15.0f);
 	AudioCarro->setIsPaused(false);
@@ -738,9 +733,6 @@ int main()
 		blue = dayBlue + (nightBlue - dayBlue) * interpolation;
 		// Establece el color de la luz
 		mainLight.SetColor(glm::vec3(red, green, blue));
-
-		//printf("%f\n", deltaTime);
-		//Animaciones
 
 		//Animacion de carro
 		if (carroAvanza)
@@ -1058,6 +1050,9 @@ int main()
 		direccionOyente.Y = -camera.getCameraDirection().y;
 		direccionOyente.Z = -camera.getCameraDirection().z;
 
+		//Actualiza sonido del carro
+
+
 		engine->setListenerPosition(posicionOyente, direccionOyente, velPerSecond, upVector);
 
 		//Instancia de la banca 
@@ -1247,7 +1242,6 @@ int main()
 		//Instancia torre
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-578.0f, -0.3f, -62.8f));
-		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TorreTLOZ.RenderModel();
 
@@ -1301,9 +1295,6 @@ int main()
 		model = glm::translate(model, glm::vec3(12.0f, -1.0f, -312.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		ArbolMuerto_M.RenderModel();
-
-		// a
-		//
 	
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(36.0f, -1.0f, -247.0f));
@@ -1367,7 +1358,6 @@ int main()
 
 		//Instancia Carro de Coraje
 		model = glm::mat4(1.0);
-		//model = glm::rotate(model, glm::radians(rotCoche), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::translate(model, glm::vec3(-113.2f, -1.0f, 248.7f + movCarro));
 		modelAuxCarro = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1400,6 +1390,13 @@ int main()
 		model = glm::rotate(model, glm::radians(rotLlantas), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		LlantaTraIzq_M.RenderModel();
+
+		//Actualizacon audio carro
+		posAudioCarro.X = -113.2f;
+		posAudioCarro.Y = -1.0f;
+		posAudioCarro.Z = 248.7f + movCarro;
+
+		AudioCarro->setPosition(posAudioCarro);
 
 		//Instancia Cuerpo Coraje
 		model = glm::mat4(1.0);
