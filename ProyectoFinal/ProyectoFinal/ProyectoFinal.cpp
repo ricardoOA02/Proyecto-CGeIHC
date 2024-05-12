@@ -60,46 +60,46 @@ Texture AgaveTexture;
 Texture CespesTexture;
 
 //Personajes
-Model CorajeBase_M; //Hecho
+Model CorajeBase_M; //Hecho //
 Model PataDer_M;	//Hecho
 Model PataIzq_M;	//Hecho
 Model ManoDer_M;	//Hecho
 Model ManoIzq_M;	//Hecho
 
 //Estructuras
-Model Piso_M;		//Hecho
-Model TorreTLOZ;	//Hecho	
-Model CasaCoraje_M;	//Hecho
-Model Igloo_M;		//Hecho
-Model Isla;			//Hecho
-Model CasaLink;		//Hecho
-Model CasaFinn_M;	//Hecho
+Model Piso_M;		//Hecho	
+Model TorreTLOZ;	//Hecho	//
+Model CasaCoraje_M;	//Hecho	//
+Model Igloo_M;		//Hecho	//
+Model Isla;			//Hecho //
+Model CasaLink;		//Hecho //
+Model CasaFinn_M;	//Hecho //
 
 //Vehiculos
-Model CarroCoraje_M;	//Hecho
-Model LlantaDelDer_M;	//Hecho
-Model LlantaDelIzq_M;	//Hecho
-Model LlantaTraDer_M;	//Hecho
-Model LlantaTraIzq_M;	//Hecho
-Model HeliceGuardian;	//Hecho
-Model CabezaGuardian;	//Hecho
-Model CuerpoGuardian;	//Hecho
-Model Barco_M;			//Hecho
+Model CarroCoraje_M;	//Hecho //
+Model LlantaDelDer_M;	//Hecho //
+Model LlantaDelIzq_M;	//Hecho //
+Model LlantaTraDer_M;	//Hecho //
+Model LlantaTraIzq_M;	//Hecho //
+Model HeliceGuardian;	//Hecho //
+Model CabezaGuardian;	//Hecho //
+Model CuerpoGuardian;	//Hecho //
+Model Barco_M;			//Hecho //
 
 //Objetos
-Model Banca_M;			//Hecho
-Model Kiosko_M;			//Hecho
-Model Bote_Basura_M;	//Hecho
-Model Fuente_M;			//Hecho
-Model Mesa;				//Hecho
-Model Bebedero;			//Hecho
-Model Lampara_M;		//Hecho
+Model Banca_M;			//Hecho //
+Model Kiosko_M;			//Hecho //
+Model Bote_Basura_M;	//Hecho //
+Model Fuente_M;			//Hecho //
+Model Mesa;				//Hecho //
+Model Bebedero;			//Hecho //
+Model Lampara_M;		//Hecho 
 Model Cartel_M;			//Hecho
-Model Cerca_M;			//Hecho
-Model Panel_M;			//Hecho
+Model Cerca_M;			//Hecho //
+Model Panel_M;			//Hecho //
 
 //Flora
-Model Cardo_M;			//Hecho
+Model Cardo_M;			//Hecho 
 Model ArbolMuerto_M;	//Hecho
 Model Pino_M;			//Hecho
 Model Korok;			//Hecho
@@ -425,6 +425,7 @@ int main()
 	//Modelos
 	Piso_M = Model();
 	Piso_M.LoadModel("Models/piso.obj");
+
 	Banca_M = Model();
 	Banca_M.LoadModel("Models/banca.obj");
 	Kiosko_M = Model();
@@ -437,6 +438,16 @@ int main()
 	Mesa.LoadModel("Models/Mesa.obj");
 	Bebedero = Model();
 	Bebedero.LoadModel("Models/Bebedero.obj");
+	Lampara_M = Model();
+	Lampara_M.LoadModel("Models/lampara.obj");
+	Cartel_M = Model();
+	Cartel_M.LoadModel("Models/Cartel.obj");
+	Cerca_M = Model();
+	Cerca_M.LoadModel("Models/cerca.obj");
+	Panel_M = Model();
+	Panel_M.LoadModel("Models/panel.obj");
+
+
 	TorreTLOZ = Model();
 	TorreTLOZ.LoadModel("Models/TLOZ/TorreDeMapeo.obj");
 	ArbolMuerto_M = Model();
@@ -463,8 +474,7 @@ int main()
 	ManoIzq_M.LoadModel("Models/Coraje/manoIzq.obj");
 	CasaCoraje_M = Model();
 	CasaCoraje_M.LoadModel("Models/Coraje/casaCoraje.obj");
-	Lampara_M = Model();
-	Lampara_M.LoadModel("Models/lampara.obj");
+
 	Pino_M = Model();
 	Pino_M.LoadModel("Models/pino.obj");
 	Igloo_M = Model();
@@ -495,12 +505,7 @@ int main()
 	Cardo_M.LoadModel("Models/Coraje/cardo.obj");
 	Barco_M = Model();
 	Barco_M.LoadModel("Models/horadeaven/barco.obj");
-	Cartel_M = Model();
-	Cartel_M.LoadModel("Models/Cartel.obj");
-	Cerca_M = Model();
-	Cerca_M.LoadModel("Models/cerca.obj");
-	Panel_M = Model();
-	Panel_M.LoadModel("Models/panel.obj");
+	
 	CasaFinn_M = Model();
 	CasaFinn_M.LoadModel("Models/horadeaven/casa.obj");
 
