@@ -523,12 +523,29 @@ int main()
 
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
-	//Declaración de primer luz puntual
+	// Luz slime
 	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f,
+		-570.3f, 1.0f, 53.85f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	// Luz numero 2 POR DECLARAR
+	pointLights[1] = PointLight(1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f,
 		-6.0f, 1.5f, 1.5f,
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
+
+	// Luz casa de coraje
+	pointLights[1] = PointLight(1.0f, 1.0f, 1.0f,
+		0.0f, 1.0f,
+		356.65f, 10.0f, -188.7f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	//356.65f, -1.0f, -188.7f
+	//Slime -570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)
 
 	unsigned int spotLightCount = 0;
 	//linterna
@@ -887,9 +904,9 @@ int main()
 
 		// Luz ligada a la cámara de tipo flash
 		// sirve para que en tiempo de ejecución (dentro del while) se cambien propiedades de la luz
-		glm::vec3 lowerLight = camera.getCameraPosition();
-		lowerLight.y -= 0.3f;
-		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
+		//glm::vec3 lowerLight = camera.getCameraPosition();
+		//lowerLight.y -= 0.3f;
+		//spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
 
 		// Información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
@@ -1358,7 +1375,8 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Slime.RenderModel();
 		glDisable(GL_BLEND);
-
+		// Luz ligada al slime
+		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
 
 		//Instancia Cardo
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
