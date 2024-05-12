@@ -20,6 +20,9 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	}
 	personajePosX = 0.0f;
 	personajePosZ = 0.0f;
+	camaraEdo = true;
+	movimientoEdo = false;
+	luzCasaEdo = true;
 
 }
 int Window::Initialise()
@@ -131,9 +134,15 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow->personajePosX -= 1.0f;
 	}
-
-
-
+	if (key == GLFW_KEY_C && action == GLFW_PRESS)
+	{
+		theWindow->camaraEdo = !theWindow->camaraEdo;
+	}
+	
+	if (key == GLFW_KEY_L && action == GLFW_PRESS)
+	{
+		theWindow->luzCasaEdo = !theWindow->luzCasaEdo;
+	}
 
 	if (key >= 0 && key < 1024)
 	{
@@ -148,6 +157,11 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 			//printf("se solto la tecla %d'\n", key);
 		}
 	}
+
+	if (theWindow->keys[GLFW_KEY_W] || theWindow->keys[GLFW_KEY_A] || theWindow->keys[GLFW_KEY_S] || theWindow->keys[GLFW_KEY_D])
+		theWindow->movimientoEdo = true;
+	else
+		theWindow->movimientoEdo = false;
 }
 
 void Window::ManejaMouse(GLFWwindow* window, double xPos, double yPos)

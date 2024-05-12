@@ -14,6 +14,8 @@ public:
 	void UseLight(GLfloat ambientIntensityLocation, GLfloat ambientcolorLocation,
 		GLfloat diffuseIntensityLocation, GLfloat positionLocation,
 		GLfloat constantLocation, GLfloat linearLocation, GLfloat exponentLocation);
+	
+	void SetPos(glm::vec3 pos);
 
 	~PointLight();
 
