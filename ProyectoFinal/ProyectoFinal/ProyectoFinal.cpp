@@ -411,7 +411,7 @@ int main()
 	CrearPlano();
 	CreateShaders();
 	CrearToroide(10.0f, 3.0f, 20, 20);
-	camera = Camera(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.5f, 0.5f, false);
+	camera = Camera(glm::vec3(-326.0f, 0.0f, 458.2f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 1.5f, 0.5f, false);
 	camera2 = Camera(glm::vec3(0.0f, 80.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -90.0f, 1.0f, 0.5f, true);
 	
 	//brickTexture = Texture("Textures/brick.png");
