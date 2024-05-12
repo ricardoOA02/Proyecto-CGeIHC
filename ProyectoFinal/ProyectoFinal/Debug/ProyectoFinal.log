@@ -1,34 +1,14 @@
-﻿  DirectionalLight.cpp
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\DirectionalLight.cpp(18,14): warning C4244: 'argumento': conversión de 'GLfloat' a 'GLint'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\DirectionalLight.cpp(19,14): warning C4244: 'argumento': conversión de 'GLfloat' a 'GLint'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\DirectionalLight.cpp(21,14): warning C4244: 'argumento': conversión de 'GLfloat' a 'GLint'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\DirectionalLight.cpp(22,14): warning C4244: 'argumento': conversión de 'GLfloat' a 'GLint'; posible pérdida de datos
-  ProyectoFinal.cpp
+﻿  ProyectoFinal.cpp
 C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
   (compilando archivo de origen "ProyectoFinal.cpp")
   
 C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
   (compilando archivo de origen "ProyectoFinal.cpp")
   
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(622,22): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(672,24): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(677,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(679,33): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(695,28): warning C4305: '+=': truncamiento de 'double' a 'float'
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(699,28): warning C4305: '-=': truncamiento de 'double' a 'float'
-  Shader_light.cpp
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(207,75): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(207,26): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(206,91): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(206,42): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(220,98): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(220,62): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(220,24): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(219,70): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(219,24): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(218,88): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Shader_light.cpp(218,42): warning C4244: 'argumento': conversión de 'GLuint' a 'GLfloat'; posible pérdida de datos
-  Skybox.cpp
-  Generando código...
-LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
+C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(633,22): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(683,24): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(688,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(690,33): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(706,28): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(710,28): warning C4305: '-=': truncamiento de 'double' a 'float'
   ProyectoFinal.vcxproj -> C:\Users\luihe\Documents\GitHub\Proyecto-CGeIHC\ProyectoFinal\Debug\ProyectoFinal.exe

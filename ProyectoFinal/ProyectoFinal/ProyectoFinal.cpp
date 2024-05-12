@@ -941,7 +941,12 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		//Cambio de skybox
+		if (false)
+			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		else
+			nightSkybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
