@@ -517,7 +517,7 @@ int main()
 	Barco_M.LoadModel("Models/horadeaven/barco.obj");
 	
 	CasaFinn_M = Model();
-	CasaFinn_M.LoadModel("Models/horadeaven/casa.obj");
+	CasaFinn_M.LoadModel("Models/horadeaven/casaa.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
