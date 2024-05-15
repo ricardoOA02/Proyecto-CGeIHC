@@ -128,6 +128,7 @@ Skybox nightSkybox;
 //materiales
 Material Material_brillante;
 Material Material_opaco;
+Material Material_pelaje;
 
 //Variables de animacion
 float rotLlantas;
@@ -551,6 +552,7 @@ int main()
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
+	Material_pelaje = Material(0.2f, 25);
 
 
 	//luz direccional, sólo 1 y siempre debe de existir
@@ -1409,6 +1411,9 @@ int main()
 
 		AudioCarro->setPosition(posAudioCarro);
 
+		//Material pelaje
+		Material_pelaje.UseMaterial(uniformSpecularIntensity, uniformShininess);
+
 		//Instancia Cuerpo Coraje
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x + glm::cos(glm::radians(camera.getYaw())) * 8.0, camera.getCameraPosition().y - 11.0f, camera.getCameraPosition().z + glm::sin(glm::radians(camera.getYaw())) * 8.0));
@@ -1451,6 +1456,8 @@ int main()
 		model = glm::scale(model, glm::vec3(8.0f, 8.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CasaCoraje_M.RenderModel();
+
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 
 		// Instancia del guardian (TLOZ)
 		// cuerpo
