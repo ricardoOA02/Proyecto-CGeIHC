@@ -118,6 +118,8 @@ Model Pinguino_M;		//Hecho
 //Otros
 Model EspadaMaestra;	//Hecho
 Model Slime;			//Hecho
+Model Libro_M;
+Model Bmo_M;
 
 Skybox skybox;
 Skybox nightSkybox;
@@ -518,6 +520,10 @@ int main()
 	
 	CasaFinn_M = Model();
 	CasaFinn_M.LoadModel("Models/horadeaven/casaa.obj");
+	Libro_M = Model();
+	Libro_M.LoadModel("Models/horadeaven/libro.obj");
+	Bmo_M = Model();
+	Bmo_M.LoadModel("Models/horadeaven/bmo.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -577,12 +583,12 @@ int main()
 
 	unsigned int spotLightCount = 0;
 	// Guardian
-	spotLights[0] = SpotLight(0.85546875f, 0.1171875f, 0.1171875f,
+	spotLights[0] = SpotLight(0.675f, 0.8475f, 0.9f,
 		1.0f, 2.0f,
-		-329.7f, 25.0f, -42.06f,
-		0.0f, -1.0f, 0.0f,
-		1.0f, 0.0f, 0.00003f,
-		20.0f);
+		-257.0f, 6.0f, 37.0f,
+		0.0f, 0.0f, -1.0f,
+		0.99f, 0.05f, 0.001f,
+		300.0f);
 	spotLightCount++;
 
 	// Espada maestra
@@ -1013,7 +1019,7 @@ int main()
 		}
 
 		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
-		spotLights[0].SetPos(glm::vec3(-329.7f + movGuardian, 20.0f, -42.06f));
+		//spotLights[0].SetPos(glm::vec3(-329.7f + movGuardian, 20.0f, -42.06f));
 		spotLights[2].SetPos(glm::vec3(-110.2f, 3.5f, 254.7f + movCarro));
 		spotLights[3].SetPos(glm::vec3(-116.2f, 3.5f, 254.7f + movCarro));
 
@@ -1799,6 +1805,22 @@ int main()
 		model = glm::translate(model, glm::vec3(-324.0f, 0.0f, 123.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		CasaFinn_M.RenderModel();
+
+		//Instancia libro
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-388.0f, 0.0f, 182.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Libro_M.RenderModel();
+
+		//Instancia Bmo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-257.0f, 0.0f, 37.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bmo_M.RenderModel();
+
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
