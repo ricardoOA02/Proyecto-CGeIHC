@@ -120,6 +120,7 @@ Model EspadaMaestra;	//Hecho
 Model Slime;			//Hecho
 Model Libro_M;
 Model Bmo_M;
+Model Calabaza_M;
 
 Skybox skybox;
 Skybox nightSkybox;
@@ -524,6 +525,8 @@ int main()
 	Libro_M.LoadModel("Models/horadeaven/libro.obj");
 	Bmo_M = Model();
 	Bmo_M.LoadModel("Models/horadeaven/bmo.obj");
+	Calabaza_M = Model();
+	Calabaza_M.LoadModel("Models/Coraje/calabaza.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -604,12 +607,13 @@ int main()
 	// Derecha
 	spotLights[2] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
 		1.0f, 2.0f,
-		-110.2f, 3.5f, 254.7f, // pos -110.2f, -1.0f, 248.7f + movCarro
-		0.0f, 0.0f, 5.0f,
-		1.0f, 0.0f, 0.0005f,
-		15.0f);
+		366.65f, 1.0f, -171.7f, // pos -110.2f, -1.0f, 248.7f + movCarro
+		0.0f, 0.0f, 1.0f,
+		0.99f, 0.01f, 0.01f,
+		20.0f);
 	spotLightCount++;
 	// Izquierda
+	/*
 	spotLights[3] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
 		1.0f, 2.0f,
 		-116.2f, 3.5f, 254.7f, // pos -116.2f, -1.0f, 248.7f + movCarro
@@ -617,7 +621,8 @@ int main()
 		1.0f, 0.0f, 0.0005f,
 		15.0f);
 	spotLightCount++;
-	
+	*/
+
 	//se crean mas luces puntuales y spotlight 
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
@@ -1015,13 +1020,13 @@ int main()
 		}
 		else 
 		{
-			shaderList[0].SetSpotLights(spotLights, spotLightCount - 2);
+			shaderList[0].SetSpotLights(spotLights, spotLightCount - 1);
 		}
 
 		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
 		//spotLights[0].SetPos(glm::vec3(-329.7f + movGuardian, 20.0f, -42.06f));
-		spotLights[2].SetPos(glm::vec3(-110.2f, 3.5f, 254.7f + movCarro));
-		spotLights[3].SetPos(glm::vec3(-116.2f, 3.5f, 254.7f + movCarro));
+		//spotLights[2].SetPos(glm::vec3(-110.2f, 3.5f, 254.7f + movCarro));
+		//spotLights[3].SetPos(glm::vec3(-116.2f, 3.5f, 254.7f + movCarro));
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -1821,6 +1826,13 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Bmo_M.RenderModel();
 
+		//Instancia Calabaza
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(366.65f, -1.0f, -170.7f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Calabaza_M.RenderModel();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
