@@ -83,6 +83,7 @@ Model Igloo_M;		//Hecho	//
 Model Isla;			//Hecho //
 Model CasaLink;		//Hecho //
 Model CasaFinn_M;	//Hecho //
+Model WTorre;
 
 //Vehiculos
 Model CarroCoraje_M;	//Hecho //
@@ -418,7 +419,7 @@ int main()
 	CreateObjects();
 	CrearPlano();
 	CreateShaders();
-	CrearToroide(10.0f, 3.0f, 20, 20);
+	CrearToroide(2.25f, 0.75f, 20, 20);
 	camera = Camera(glm::vec3(-326.0f, 0.0f, 458.2f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 1.5f, 0.5f, false);
 	camera2 = Camera(glm::vec3(0.0f, 80.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, -90.0f, 1.0f, 0.5f, true);
 	
@@ -525,6 +526,8 @@ int main()
 	Cardo_M.LoadModel("Models/Coraje/cardo.obj");
 	Barco_M = Model();
 	Barco_M.LoadModel("Models/horadeaven/barco.obj");
+	WTorre = Model();
+	WTorre.LoadModel("Models/TLOZ/WindowsTower.obj");
 	
 	CasaFinn_M = Model();
 	CasaFinn_M.LoadModel("Models/horadeaven/casaa.obj");
@@ -1853,34 +1856,91 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		toroide.Renderizar();
 		
+		// Instancia toroide
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-580.0f, 1.8f, -117.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(0.99609375f, 0.22265625f, 0.1484375f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		meshList[5]->RenderMesh();
+
+		////Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, 1.0f, -4.0f));
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		////blending: transparencia o traslucidez
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//AgaveTexture.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		////meshList[3]->RenderMesh();
+		//glDisable(GL_BLEND);
+
+		// Circunferencias
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-326.0f, 0.0f, 458.2f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		meshList[5]->RenderMesh();
-
-		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 1.0f, -4.0f));
-		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//blending: transparencia o traslucidez
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		AgaveTexture.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[3]->RenderMesh();
-		glDisable(GL_BLEND);
+		circulo.Renderizar();
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-326.0f, 0.0f, 458.2f));
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		circulo.Renderizar();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-331.0f, 0.0f, 458.2f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		circulo.Renderizar();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-321.0f, 0.0f, 458.2f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		circulo.Renderizar();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-326.0f, 0.0f, 453.2f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		circulo.Renderizar();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-326.0f, 0.0f, 463.2f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		circulo.Renderizar();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-578.0f, -0.3f, -62.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//blending: transparencia o traslucidez
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		WTorre.RenderModel();
+		glDisable(GL_BLEND);
 
 		glUseProgram(0);
 		mainWindow.swapBuffers();
