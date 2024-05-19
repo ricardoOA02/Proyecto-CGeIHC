@@ -29,8 +29,9 @@ Proyecto Final
 #include "Camera.h"
 #include "Texture.h"
 #include "Sphere.h"
-#include"Model.h"
+#include "Model.h"
 #include "Skybox.h"
+#include "Toroide.h"
 
 //para iluminación
 #include "CommonValues.h"
@@ -58,6 +59,7 @@ Texture plainTexture;
 Texture pisoTexture;
 Texture AgaveTexture;
 Texture CespesTexture;
+Texture Blanco;
 
 //Personajes
 Model CorajeBase_M; //Hecho //
@@ -401,7 +403,7 @@ void CreateShaders()
 
 
 int main()
-{
+{	
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
 	mainWindow.Initialise();
 
@@ -426,6 +428,8 @@ int main()
 	AgaveTexture.LoadTextureA();
 	CespesTexture = Texture("Textures/cesped.tga");
 	CespesTexture.LoadTextureA();
+	Blanco = Texture("Textures/blanco.png");
+	Blanco.LoadTexture();
 	
 	// Texturas
 
@@ -587,7 +591,7 @@ int main()
 	
 
 	unsigned int spotLightCount = 0;
-	// Guardian
+	// Luz Bmo
 	spotLights[0] = SpotLight(0.675f, 0.8475f, 0.9f,
 		1.0f, 2.0f,
 		-257.0f, 6.0f, 37.0f,
@@ -605,25 +609,14 @@ int main()
 		50.0f);
 	spotLightCount++;
 
-	// Camioneta
-	// Derecha
+	//Luz Calabaza
 	spotLights[2] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
 		1.0f, 2.0f,
-		366.65f, 1.0f, -171.7f, // pos -110.2f, -1.0f, 248.7f + movCarro
+		366.65f, 1.0f, -171.7f,
 		0.0f, 0.0f, 1.0f,
 		0.99f, 0.01f, 0.01f,
 		20.0f);
 	spotLightCount++;
-	// Izquierda
-	/*
-	spotLights[3] = SpotLight(0.95703125f, 0.9765625f, 0.29296875f,
-		1.0f, 2.0f,
-		-116.2f, 3.5f, 254.7f, // pos -116.2f, -1.0f, 248.7f + movCarro
-		0.0f, 0.0f, 5.0f,
-		1.0f, 0.0f, 0.0005f,
-		15.0f);
-	spotLightCount++;
-	*/
 
 	//se crean mas luces puntuales y spotlight 
 
@@ -702,6 +695,13 @@ int main()
 	rotCorajeOffset = 0.7f;
 	rotCoraje = 0.0f;
 	giroCoraje = true;
+	Sphere esfera(2.0, 10, 10);
+	esfera.init();
+	esfera.load();
+
+	Toroide toroide(4.0f, 2.0f, 25, 25);
+	toroide.init();
+	toroide.load();
 
 	lastTime = glfwGetTime();
 
@@ -1667,8 +1667,6 @@ int main()
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-200.0f, 0.0f, 340.0f));
-		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Caballo.RenderModel();
 
@@ -1676,14 +1674,12 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-437.3f, 0.0f, 60.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Zorro.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-410.3f, 0.0f, 75.0f));
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Zorro.RenderModel();
 
@@ -1736,13 +1732,15 @@ int main()
 		PIzq.RenderModel();
 
 		//Instancia toroide
-		//model = glm::mat4(1.0);
-		////model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		////model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//color = glm::vec3(1.0f, 1.0f, 1.0f);
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//meshList[5]->RenderMesh();
+		/*
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		meshList[5]->RenderMesh();
+		*/
 
 		//Instancia Casa
 		model = glm::mat4(1.0);
@@ -1784,7 +1782,6 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-31.45 + movBarco, 0.0f, -447.85f));
 		model = glm::rotate(model, glm::radians(rotBarco), glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Barco_M.RenderModel();
 
@@ -1834,12 +1831,28 @@ int main()
 		Bmo_M.RenderModel();
 
 		//Instancia Calabaza
-
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(366.65f, -1.0f, -170.7f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Calabaza_M.RenderModel();
+
+		Blanco.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		color = glm::vec3(0.5f, 0.5f, 1.0f);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-257.0f, 10.0f, 28.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		toroide.Renderizar();
+		
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		meshList[5]->RenderMesh();
 
 		//Agave ¿qué sucede si lo renderizan antes del coche y el helicóptero?
 		model = glm::mat4(1.0);
@@ -1855,7 +1868,6 @@ int main()
 		glDisable(GL_BLEND);
 
 		glUseProgram(0);
-
 		mainWindow.swapBuffers();
 	}
 	AudioCarro->drop();
