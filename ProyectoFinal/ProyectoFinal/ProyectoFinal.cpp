@@ -116,6 +116,7 @@ Model Korok;			//Hecho
 Model Caballo;			//Hecho
 Model Zorro;			//Hecho
 Model Pinguino_M;		//Hecho
+Model Gallo_M;
 
 //Otros
 Model EspadaMaestra;	//Hecho
@@ -532,6 +533,8 @@ int main()
 	Bmo_M.LoadModel("Models/horadeaven/bmo.obj");
 	Calabaza_M = Model();
 	Calabaza_M.LoadModel("Models/Coraje/calabaza.obj");
+	Gallo_M = Model();
+	Gallo_M.LoadModel("Models/gallo.obj");
 
 	// Skybox
 	std::vector<std::string> skyboxFaces;
@@ -636,13 +639,16 @@ int main()
 	irrklang::vec3df upVector(0, 1, 0);
 
 	//Sonidos de objetos
+	//Audio de gallo
+	irrklang::ISound* AudioGallo;
+	irrklang::vec3df posicionGallo(336.0f, 6.85f, -265.0f);
+	bool bandera = true;
 
 	//Audio del carro
 	irrklang::vec3df posicion(20.0f, -1.0f, -20.0f);
 	irrklang::ISound* AudioCarro = engine->play3D("audios/carro.flac", posicion, true, true);
 	irrklang::vec3df posAudioCarro(0.0f, 0.0f, 0.0f);
-
-	AudioCarro->setMinDistance(15.0f);
+	AudioCarro->setMinDistance(20.0f);
 	AudioCarro->setIsPaused(false);
 
 	// Variables para el ciclo dia/noche
@@ -732,7 +738,7 @@ int main()
 		{
 			interpolation -= 0.00025 * deltaTime;
 		}
-		if (interpolation >= 0.5 and interpolation <= 1.0)
+		if (interpolation >= 0.5 and interpolation < 1.2)
 		{
 			dayChange = true;
 		}
@@ -740,6 +746,7 @@ int main()
 		{
 			dayChange = false;
 		}
+
 		// Hace el calculo de los valores del color
 		red = dayRed + (nightRed - dayRed) * interpolation;
 		green = dayGreen + (nightGreen - dayGreen) * interpolation;
@@ -1019,16 +1026,21 @@ int main()
 		if (dayChange)
 		{
 			shaderList[0].SetSpotLights(spotLights, spotLightCount);
+			bandera = true;
 		}
 		else 
 		{
 			shaderList[0].SetSpotLights(spotLights, spotLightCount - 1);
+			if (bandera)
+			{
+				AudioGallo = engine->play3D("audios/gallo.flac", posicionGallo, false, true);
+				AudioGallo->setMinDistance(20.0f);
+				AudioGallo->setIsPaused(false);
+				bandera = false;
+			}
 		}
 
 		pointLights[0].SetPos(glm::vec3(-570.3 + 10 * cos(slimeAvanza), 1.0f + 5 * abs(sin(slimeSalto)), 53.85f + 10 * sin(slimeAvanza)));
-		//spotLights[0].SetPos(glm::vec3(-329.7f + movGuardian, 20.0f, -42.06f));
-		//spotLights[2].SetPos(glm::vec3(-110.2f, 3.5f, 254.7f + movCarro));
-		//spotLights[3].SetPos(glm::vec3(-116.2f, 3.5f, 254.7f + movCarro));
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -1602,7 +1614,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-350.0f, -1.0f, 90.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Pino_M.RenderModel();
+		//Pino_M.RenderModel();
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-360.0f, -1.0f, 310.0f));
@@ -1627,7 +1639,6 @@ int main()
 		//Instancia Igloo
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(641.5f, -1.0f, -193.15f));
-		//model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Igloo_M.RenderModel();
 
@@ -1703,44 +1714,28 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-578.0f, 2.2f, -62.8f));
 		modelAuxLink = model;
-		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Link.RenderModel();
 
 		model = modelAuxLink;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BDer.RenderModel();
 
 		model = modelAuxLink;
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BIzq.RenderModel();
 
 		model = modelAuxLink;
 		model = glm::translate(model, glm::vec3(-0.3f, -1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		PDer.RenderModel();
 
 		model = modelAuxLink;
 		model = glm::translate(model, glm::vec3(0.3f, -0.95f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		PIzq.RenderModel();
-
-		//Instancia toroide
-		/*
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		meshList[5]->RenderMesh();
-		*/
 
 		//Instancia Casa
 		model = glm::mat4(1.0);
@@ -1802,6 +1797,13 @@ int main()
 		model = glm::translate(model, glm::vec3(336.0f, 0.0f, -265.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Cerca_M.RenderModel();
+
+		//Instancia gallo
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(336.0f, 6.85f, -265.0f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Gallo_M.RenderModel();
 
 		//Instancia panel solar
 		model = glm::mat4(1.0);
