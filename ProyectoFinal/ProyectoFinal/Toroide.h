@@ -13,7 +13,6 @@ class Toroide
 {
 public:
 	Toroide(float radioToroide, float radioInterno, int resX, int resY);
-	//~Toroide();
 
 	void init();
 	void load();

@@ -13,7 +13,6 @@ class Circle
 {
 public:
 	Circle(float radio, float x0, float y0, float z0);
-	//~Toroide();
 
 	void init();
 	void load();

@@ -1,14 +1,15 @@
 ﻿  ProyectoFinal.cpp
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(12,36): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'ProyectoFinal.cpp')
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "ProyectoFinal.cpp")
   
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(13,37): warning C4244: 'return': conversion from 'GLint' to 'GLfloat', possible loss of data
-  (compiling source file 'ProyectoFinal.cpp')
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "ProyectoFinal.cpp")
   
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(659,22): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(720,24): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(725,15): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(727,33): warning C4244: '+=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(743,29): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(747,29): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-  ProyectoFinal.vcxproj -> C:\Users\ricar\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\Debug\ProyectoFinal.exe
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(649,24): warning C4305: 'argumento': truncamiento de 'double' a 'irrklang::ik_f32'
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(664,22): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(725,24): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(730,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(732,33): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(748,29): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\ProyectoFinal\ProyectoFinal.cpp(752,29): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
+  ProyectoFinal.vcxproj -> C:\Users\luihe\OneDrive\Documentos\GitHub\Proyecto-CGeIHC\ProyectoFinal\Debug\ProyectoFinal.exe

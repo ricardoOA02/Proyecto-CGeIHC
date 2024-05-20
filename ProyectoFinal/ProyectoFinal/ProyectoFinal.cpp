@@ -438,7 +438,7 @@ int main()
 
 	//Modelos
 	Piso_M = Model();
-	Piso_M.LoadModel("Models/piso.obj");
+	Piso_M.LoadModel("Models/pisoo.obj");
 	Banca_M = Model();
 	Banca_M.LoadModel("Models/banca.obj");
 	Kiosko_M = Model();
@@ -584,8 +584,8 @@ int main()
 	// Luz casa finn y jake
 	pointLights[1] = PointLight(0.99609375f, 0.87109375f, 0.0f,
 		0.0f, 0.9f,
-		-355.5f, 13.0f, 197.0f,
-		0.3f, 0.2f, 0.1f);
+		-355.5f, 10.0f, 192.0f,
+		0.8f, 0.02f, 0.007f);
 	pointLightCount++;
 
 	// Luz casa de coraje
@@ -631,10 +631,8 @@ int main()
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
-	//Ejecución del sonido de fondo
-	//engine->play2D("audios/parque.mp3", true);
-	irrklang::ISound* AudioFondo = engine->play2D("audios/parque.mp3", true, false, true);
-	AudioFondo->setVolume(0.1f);
+
+	//Sonido
 
 	//Inicia el audio 3D
 	irrklang::vec3df posicionOyente(0, 0, 0);
@@ -642,7 +640,14 @@ int main()
 	irrklang::vec3df velPerSecond(0, 0, 0);
 	irrklang::vec3df upVector(0, 1, 0);
 
-	//Sonidos de objetos
+	//Audio continuo
+	irrklang::ISound* AudioFondo = engine->play2D("audios/parque.mp3", true, false, true);
+	AudioFondo->setVolume(0.1f);
+	
+	//Audio pasos
+	irrklang::ISound* AudioPasos = engine->play2D("audios/pasos.flac", true, true);
+	AudioPasos->setVolume(0.2);
+
 	//Audio de gallo
 	irrklang::ISound* AudioGallo;
 	irrklang::vec3df posicionGallo(336.0f, 6.85f, -265.0f);
@@ -702,7 +707,7 @@ int main()
 	rotGuardian = 0.0f;
 	guardianAvanza = true;
 
-	rotCorajeOffset = 0.7f;
+	rotCorajeOffset = 0.82f;
 	rotCoraje = 0.0f;
 	giroCoraje = true;
 	Sphere esfera(2.0, 10, 10);
@@ -960,6 +965,7 @@ int main()
 		//Animacion personaje
 		if (mainWindow.getMovimientoEdo() && mainWindow.getCamaraEdo())
 		{
+			AudioPasos->setIsPaused(false);
 			if (giroCoraje)
 			{
 				if (rotCoraje > -15.0f)
@@ -974,6 +980,10 @@ int main()
 				else
 					giroCoraje = true;
 			}
+		}
+		else
+		{
+			AudioPasos->setIsPaused(true);
 		}
 
 		
@@ -1847,16 +1857,18 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Calabaza_M.RenderModel();
 
+		//Instacia toroide Hector
 		Blanco.UseTexture();
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		color = glm::vec3(0.5f, 0.5f, 1.0f);
+		color = glm::vec3(1.0f, 0.5f, 0.0f);
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-257.0f, 10.0f, 28.0f));
+		model = glm::translate(model, glm::vec3(-709.6f, 1.0f, -271.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		toroide.Renderizar();
-		
-		// Instancia toroide
+		 
+		// Instancia toroide Ricardo
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-580.0f, 1.8f, -117.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
